@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Bangkok Kropper is a professional barbershop in Sukhumvit, Bangkok, offering precision haircuts, modern fades, styling, beard trims, and premium grooming for both men and women.",
+          "Bangkok Kropper is a professional barber shop with locations in Sukhumvit and Phaya Thai, Bangkok. We offer precision haircuts, modern fades, styling, beard trims, and premium grooming for both men and women.",
       },
       { property: "og:title", content: "Bangkok Kropper | Best Barber Shop in Bangkok" },
       {
@@ -35,7 +35,7 @@ const googleReviewLink =
 const reviews = [
   ["I had a great experience at this barber shop in Bangkok. I’m a tourist visiting the city, and they gave me an excellent haircut. The staff was very professional, friendly, and understood exactly what I wanted. The service was clean, quick, and well-organized. I’m really happy with the result and would highly recommend this place to anyone visiting Bangkok.", "Sagar Sonar", "Google review"],
   ["Lucky to have found this nice shop. They are all professionals who can give you sound advice and do their job nicely. Furthermore, they are good in English and one of them can even understand and speak Mandarin. Whatever you would like to have done, beard or hair, just go to them.", "Victor Gomes", "Google review"],
-  ["One of the best experiences I’ve had in a barbershop. Maa pays so much attention to detail, the fade was immaculate, and he was very gentle. He also razor shaved the edges and wiped me with a warm towel afterwards. Highly recommend.", "Ryan Muir", "Google review"],
+  ["One of the best experiences I’ve had in a barber shop. Maa pays so much attention to detail, the fade was immaculate, and he was very gentle. He also razor shaved the edges and wiped me with a warm towel afterwards. Highly recommend.", "Ryan Muir", "Google review"],
   ["I cut my hair and beard here, and the result was really good. The barber was professional, careful, and paid attention to the details. The place was clean, the service was smooth, and I left very happy with the haircut and beard trim. Highly recommended! Special thanks to Fong.", "Ahmed Alhefeiti", "Google review"],
   ["Exceptional! Decided to wash and dry my hair as my partner was cutting his and I had a lovely time. My hair turned out perfect. Such a good late night pick me up.", "Judith Louis", "Google review"],
 ] as const;
@@ -116,6 +116,7 @@ const teamThai: Record<string, { role: string; bio: string; specialties: string[
   Kropper: { role: "ผู้ก่อตั้ง · ช่างตัดผมมืออาชีพ", bio: "ตัดผมแม่นยำ ดูแลแบบคลาสสิก และสร้างประสบการณ์ Bangkok Kropper อันเป็นเอกลักษณ์", specialties: ["ตัดผม", "หนวดเครา", "โกน", "จัดแต่งทรง"] },
   Mali: { role: "ผู้เชี่ยวชาญด้านสีผม", bio: "ออกแบบสีผม ทรีตเมนต์ฟื้นบำรุง และสร้างทรงที่เหมาะกับทุกสภาพเส้นผม", specialties: ["ทำสี", "ไฮไลต์", "แฮร์สปา", "เคราติน"] },
   Niran: { role: "ผู้เชี่ยวชาญด้านกรูมมิ่ง", bio: "โกนด้วยมีดโกน แต่งทรงหนวดเครา และดูแลด้วยผ้าร้อนอย่างผ่อนคลายในย่านสุขุมวิท", specialties: ["หนวดเครา", "มีดโกน", "ผ้าร้อน", "กรูมมิ่ง"] },
+  Fong: { role: "ช่างตัดผมอาวุโส", bio: "จัดแต่งทรงอย่างพิถีพิถัน เฟดคมสะอาด และดูแลลูกค้าทุกคนอย่างเป็นกันเอง", specialties: ["เฟด", "จัดแต่งทรง", "หนวดเครา", "เก็บรายละเอียด"] },
 };
 
 function localizedTeamMember(member: (typeof team)[number], language: "en" | "th") {

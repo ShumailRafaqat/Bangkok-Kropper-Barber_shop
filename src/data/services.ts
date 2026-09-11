@@ -39,7 +39,7 @@ export const services: Service[] = [
     category: "hair",
     price: 350,
     minutes: 35,
-    blurb: "Timeless scissor work — side part, crop or pompadour, cut dry for real-world shape.",
+    blurb: "Timeless scissor work, including side parts, crops and pompadours, cut dry for real-world shape.",
     includes: ["Scissor cut", "Neck clean-up", "Blow dry", "Product finish"],
   },
   {

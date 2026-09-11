@@ -30,6 +30,11 @@ export const Route = createFileRoute("/services")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [
+      { rel: "alternate", hrefLang: "en", href: "/services" },
+      { rel: "alternate", hrefLang: "th", href: "/services?lang=th" },
+      { rel: "alternate", hrefLang: "x-default", href: "/services" },
+    ],
   }),
   component: ServicesPage,
 });

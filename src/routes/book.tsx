@@ -33,6 +33,11 @@ export const Route = createFileRoute("/book")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
+    links: [
+      { rel: "alternate", hrefLang: "en", href: "/book" },
+      { rel: "alternate", hrefLang: "th", href: "/book?lang=th" },
+      { rel: "alternate", hrefLang: "x-default", href: "/book" },
+    ],
   }),
   component: BookPage,
 });

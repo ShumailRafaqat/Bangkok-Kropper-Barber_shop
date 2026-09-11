@@ -19,6 +19,7 @@ import {
   Sparkles,
   User,
   Wind,
+  X,
 } from "lucide-react";
 import { offerDiscount, specialOffers, type SpecialOffer } from "@/data/offers";
 import { useI18n } from "@/lib/i18n";
@@ -298,6 +299,7 @@ export function BookingFlow() {
   const [selectedServices, setSelectedServices] = useState<Svc[]>([]);
   const [matchedOffer, setMatchedOffer] = useState<SpecialOffer | null>(null);
   const [showDealNotice, setShowDealNotice] = useState(false);
+  const [showBookingOptions, setShowBookingOptions] = useState(true);
   const [date, setDate] = useState<string | null>(null);
   const [time, setTime] = useState<string | null>(null);
   const [contactMethod, setContactMethod] = useState<"whatsapp" | "line" | null>(null);
@@ -417,6 +419,7 @@ export function BookingFlow() {
     setSelectedServices([]);
     setMatchedOffer(null);
     setShowDealNotice(false);
+    setShowBookingOptions(true);
     setDate(null);
     setTime(null);
     setContactMethod(null);
@@ -461,12 +464,15 @@ export function BookingFlow() {
 
   return (
     <div className="relative min-w-0 max-w-full overflow-visible rounded-sm border border-border bg-card/70 p-4 pb-24 shadow-2xl shadow-black/20 sm:pb-6 md:p-6">
-      {!contactMethod && (
+      {showBookingOptions && !contactMethod && (
         <div className="fixed inset-0 z-[75] grid place-items-center bg-black/70 px-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="booking-channel-title">
-          <div className="w-full max-w-md border border-primary/45 bg-background p-6 text-center shadow-2xl sm:p-8">
+          <div className="relative w-full max-w-md border border-primary/45 bg-background p-6 text-center shadow-2xl sm:p-8">
+            <button type="button" onClick={() => setShowBookingOptions(false)} aria-label={language === "th" ? "ปิดหน้าต่าง" : "Close booking options"} className="absolute right-4 top-4 z-10 grid size-9 place-items-center rounded-full border border-primary/60 bg-background text-primary transition-colors hover:bg-primary hover:text-primary-foreground">
+              <X className="size-4" />
+            </button>
             <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">Bangkok Kropper</p>
-            <h2 id="booking-channel-title" className="mt-3 font-display text-2xl text-foreground">How would you like to book?</h2>
-            <p className="mt-3 text-sm leading-6 text-muted-foreground">Choose a contact channel first. Your appointment details will be prepared for you.</p>
+            <h2 id="booking-channel-title" className="mt-3 font-display text-2xl text-foreground">{language === "th" ? "ต้องการจองคิวผ่านช่องทางใด" : "How would you like to book?"}</h2>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">{language === "th" ? "เลือกช่องทางติดต่อก่อน เราจะเตรียมรายละเอียดนัดหมายให้คุณ" : "Choose a contact channel first. Your appointment details will be prepared for you."}</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <button type="button" onClick={() => setContactMethod("whatsapp")} className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-3 text-xs font-bold uppercase tracking-[0.14em] text-primary-foreground">
                 <MessageCircle className="size-4" /> WhatsApp
@@ -479,20 +485,23 @@ export function BookingFlow() {
         </div>
       )}
 
-      {contactMethod && !location && (
+      {showBookingOptions && contactMethod && !location && (
         <div className="fixed inset-0 z-[75] grid place-items-center bg-black/70 px-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="booking-location-title">
-          <div className="w-full max-w-md border border-primary/45 bg-background p-6 text-center shadow-2xl sm:p-8">
+          <div className="relative w-full max-w-md border border-primary/45 bg-background p-6 text-center shadow-2xl sm:p-8">
+            <button type="button" onClick={() => { setShowBookingOptions(false); setContactMethod(null); setLocation(null); }} aria-label={language === "th" ? "ปิดหน้าต่าง" : "Close location options"} className="absolute right-4 top-4 z-10 grid size-9 place-items-center rounded-full border border-primary/60 bg-background text-primary transition-colors hover:bg-primary hover:text-primary-foreground">
+              <X className="size-4" />
+            </button>
             <MapPin className="mx-auto size-7 text-primary" />
-            <h2 id="booking-location-title" className="mt-3 font-display text-2xl text-foreground">Choose your location</h2>
-            <p className="mt-3 text-sm leading-6 text-muted-foreground">Where would you like to visit for your appointment?</p>
+            <h2 id="booking-location-title" className="mt-3 font-display text-2xl text-foreground">{language === "th" ? "เลือกสาขาที่ต้องการเข้าใช้บริการ" : "Choose your location"}</h2>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">{language === "th" ? "ต้องการเข้าใช้บริการที่สาขาใด" : "Where would you like to visit for your appointment?"}</p>
             <div className="mt-6 grid gap-3">
               <button type="button" onClick={() => setLocation("Khlong Toei · Sukhumvit — 33 Sukhumvit Rd, Bangkok 10110")} className="border border-border px-4 py-3 text-left text-sm text-foreground transition-colors hover:border-primary hover:text-primary">
-                <span className="block text-xs font-bold uppercase tracking-[0.18em] text-primary">Location 01</span>
+                <span className="block text-xs font-bold uppercase tracking-[0.18em] text-primary">{language === "th" ? "สาขา 01" : "Location 01"}</span>
                 Khlong Toei · Sukhumvit
                 <span className="mt-1 block text-xs text-muted-foreground">33 Sukhumvit Rd, Bangkok 10110</span>
               </button>
               <button type="button" onClick={() => setLocation("Phaya Thai · Phahon Yothin — 2/3 Phahon Yothin 7, Bangkok 10400")} className="border border-border px-4 py-3 text-left text-sm text-foreground transition-colors hover:border-primary hover:text-primary">
-                <span className="block text-xs font-bold uppercase tracking-[0.18em] text-primary">Location 02</span>
+                <span className="block text-xs font-bold uppercase tracking-[0.18em] text-primary">{language === "th" ? "สาขา 02" : "Location 02"}</span>
                 Phaya Thai · Phahon Yothin
                 <span className="mt-1 block text-xs text-muted-foreground">2/3 Phahon Yothin 7, Bangkok 10400</span>
               </button>

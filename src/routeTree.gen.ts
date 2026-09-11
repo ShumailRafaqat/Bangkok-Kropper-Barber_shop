@@ -14,7 +14,9 @@ import { Route as ServiceSlugRouteImport } from './routes/$serviceSlug'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as GroomingGuideRouteImport } from './routes/grooming-guide'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as BarberJournalArticleSlugRouteImport } from './routes/barber-journal/$articleSlug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,11 +43,22 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GroomingGuideRoute = GroomingGuideRouteImport.update({
+  id: '/grooming-guide',
+  path: '/grooming-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BarberJournalArticleSlugRoute =
+  BarberJournalArticleSlugRouteImport.update({
+    id: '/barber-journal/$articleSlug',
+    path: '/barber-journal/$articleSlug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,7 +66,9 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/grooming-guide': typeof GroomingGuideRoute
   '/services': typeof ServicesRoute
+  '/barber-journal/$articleSlug': typeof BarberJournalArticleSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +76,9 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/grooming-guide': typeof GroomingGuideRoute
   '/services': typeof ServicesRoute
+  '/barber-journal/$articleSlug': typeof BarberJournalArticleSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,14 +87,31 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/grooming-guide': typeof GroomingGuideRoute
   '/services': typeof ServicesRoute
+  '/barber-journal/$articleSlug': typeof BarberJournalArticleSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/$serviceSlug' | '/about' | '/book' | '/contact' | '/services'
+    | '/'
+    | '/$serviceSlug'
+    | '/about'
+    | '/book'
+    | '/contact'
+    | '/grooming-guide'
+    | '/services'
+    | '/barber-journal/$articleSlug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$serviceSlug' | '/about' | '/book' | '/contact' | '/services'
+  to:
+    | '/'
+    | '/$serviceSlug'
+    | '/about'
+    | '/book'
+    | '/contact'
+    | '/grooming-guide'
+    | '/services'
+    | '/barber-journal/$articleSlug'
   id:
     | '__root__'
     | '/'
@@ -85,7 +119,9 @@ export interface FileRouteTypes {
     | '/about'
     | '/book'
     | '/contact'
+    | '/grooming-guide'
     | '/services'
+    | '/barber-journal/$articleSlug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -94,7 +130,9 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BookRoute: typeof BookRoute
   ContactRoute: typeof ContactRoute
+  GroomingGuideRoute: typeof GroomingGuideRoute
   ServicesRoute: typeof ServicesRoute
+  BarberJournalArticleSlugRoute: typeof BarberJournalArticleSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -134,11 +172,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/grooming-guide': {
+      id: '/grooming-guide'
+      path: '/grooming-guide'
+      fullPath: '/grooming-guide'
+      preLoaderRoute: typeof GroomingGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/barber-journal/$articleSlug': {
+      id: '/barber-journal/$articleSlug'
+      path: '/barber-journal/$articleSlug'
+      fullPath: '/barber-journal/$articleSlug'
+      preLoaderRoute: typeof BarberJournalArticleSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -150,7 +202,9 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BookRoute: BookRoute,
   ContactRoute: ContactRoute,
+  GroomingGuideRoute: GroomingGuideRoute,
   ServicesRoute: ServicesRoute,
+  BarberJournalArticleSlugRoute: BarberJournalArticleSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

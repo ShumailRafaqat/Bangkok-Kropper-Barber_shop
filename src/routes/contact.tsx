@@ -7,13 +7,13 @@ import { services } from "@/data/services";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Visit & Book — Bangkok Kropper Barber Shop, Khlong Toei" },
+      { title: "Visit & Book | Bangkok Kropper Barber Shop, Khlong Toei" },
       {
         name: "description",
         content:
-          "Book a chair at Bangkok Kropper Barber Shop in Khlong Toei, Bangkok. Call +66 92 905 0509 — open daily, 4.9★ from 665 reviews.",
+          "Book a chair at Bangkok Kropper Barber Shop in Khlong Toei, Bangkok. Call +66 92 905 0509. Open daily, rated 4.9★ from 665 reviews.",
       },
-      { property: "og:title", content: "Visit & Book — Bangkok Kropper Barber Shop" },
+      { property: "og:title", content: "Visit & Book | Bangkok Kropper Barber Shop" },
       {
         property: "og:description",
         content: "Khlong Toei, Bangkok. Call +66 92 905 0509 to reserve your chair.",
@@ -110,7 +110,7 @@ function ContactPage() {
                 >
                   {services.map((s) => (
                     <option key={s.id} value={s.id}>
-                      {s.name} — ฿{s.price}
+                      {s.name}, ฿{s.price}
                     </option>
                   ))}
                 </select>
@@ -120,12 +120,12 @@ function ContactPage() {
             <div className="mt-6 rounded-sm border border-border bg-background/60 p-4 text-sm text-muted-foreground">
               {sent ? (
                 <p className="text-primary">
-                  Thanks {name.trim()} — we’ve noted {picked.name} on {day} at {slot}. Call{" "}
+                  Thanks {name.trim()}. We’ve noted {picked.name} on {day} at {slot}. Call{" "}
                   {PHONE} to lock it in.
                 </p>
               ) : (
                 <p>
-                  {picked.name} · {picked.minutes} min · ฿{picked.price} —{" "}
+                  {picked.name}, {picked.minutes} min, ฿{picked.price}.{" "}
                   {slot ? `${day} at ${slot}` : "choose a time above"}
                 </p>
               )}
@@ -140,7 +140,7 @@ function ContactPage() {
               {sent ? "Request noted" : "Request this slot"}
             </button>
             <p className="mt-3 text-center text-xs text-muted-foreground">
-              Requests are confirmed by phone — walk-ins always welcome.
+              Requests are confirmed by phone. Walk-ins are always welcome.
             </p>
           </div>
 

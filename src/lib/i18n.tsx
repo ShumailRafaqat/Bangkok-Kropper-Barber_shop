@@ -9,6 +9,8 @@ export type LanguageCode = (typeof languages)[number]["code"];
 
 type Copy = {
   home: string;
+  about: string;
+  blog: string;
   services: string;
   visit: string;
   bookAppointment: string;
@@ -165,6 +167,8 @@ type Copy = {
 const copy: Record<LanguageCode, Copy> = {
   en: {
     home: "Home",
+    about: "About",
+    blog: "Blog",
     services: "Services",
     visit: "Visit",
     bookAppointment: "Book appointment",
@@ -209,7 +213,7 @@ const copy: Record<LanguageCode, Copy> = {
     faqTitle: "Bangkok barber FAQ",
     faqIntro: "Quick answers about services, prices, walk-ins, directions and opening hours.",
     footerIntro: "Sharp fades, straight-razor shaves and Thai herbal head spa on Sukhumvit Road.",
-    heroDescription: "Bangkok Kropper is a professional barbershop in Sukhumvit, Bangkok, offering precision haircuts, modern fades, styling, beard trims, and premium grooming for both men and women.",
+    heroDescription: "Bangkok Kropper is a professional barber shop with locations in Sukhumvit and Phaya Thai, Bangkok. We offer precision haircuts, modern fades, styling, beard trims, and premium grooming for both men and women.",
     watchRitual: "Watch the ritual",
     locations: "Locations",
     findYourChair: "Find your chair",
@@ -320,6 +324,8 @@ const copy: Record<LanguageCode, Copy> = {
   },
   th: {
     home: "หน้าหลัก",
+    about: "เกี่ยวกับเรา",
+    blog: "บล็อก",
     services: "บริการ",
     visit: "เยี่ยมชม",
     bookAppointment: "จองคิว",
@@ -363,7 +369,7 @@ const copy: Record<LanguageCode, Copy> = {
     faqTitle: "คำถามที่พบบ่อย",
     faqIntro: "คำตอบเกี่ยวกับบริการ ราคา การเข้าร้านแบบไม่ได้นัดหมาย เส้นทาง และเวลาเปิดทำการ",
     footerIntro: "เฟดคมกริบ โกนหนวดด้วยมีดโกน และเฮดสปาสมุนไพรไทยบนถนนสุขุมวิท",
-    heroDescription: "Bangkok Kropper คือร้านบาร์เบอร์มืออาชีพย่านสุขุมวิท กรุงเทพฯ ให้บริการตัดผม เฟด จัดแต่งทรง เล็มหนวดเครา และดูแลเส้นผมระดับพรีเมียมสำหรับทุกคน",
+    heroDescription: "Bangkok Kropper คือร้านบาร์เบอร์มืออาชีพที่มีสาขาในย่านสุขุมวิทและพญาไท กรุงเทพฯ ให้บริการตัดผม เฟด จัดแต่งทรง เล็มหนวดเครา และดูแลเส้นผมระดับพรีเมียมสำหรับทุกคน",
     watchRitual: "ชมขั้นตอนการดูแล",
     locations: "สาขา",
     findYourChair: "ค้นหาเก้าอี้ของคุณ",
@@ -670,6 +676,8 @@ const I18nContext = createContext<I18nContextValue | null>(null);
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<LanguageCode>(() => {
     if (typeof window === "undefined") return "en";
+    const urlLanguage = new URLSearchParams(window.location.search).get("lang") as LanguageCode | null;
+    if (urlLanguage && languages.some((item) => item.code === urlLanguage)) return urlLanguage;
     const saved = window.localStorage.getItem("bk-language") as LanguageCode | null;
     return saved && languages.some((item) => item.code === saved) ? saved : "en";
   });
@@ -677,11 +685,28 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const setLanguage = (next: LanguageCode) => {
     setLanguageState(next);
     window.localStorage.setItem("bk-language", next);
+    const url = new URL(window.location.href);
+    if (next === "en") url.searchParams.delete("lang");
+    else url.searchParams.set("lang", next);
+    window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
   };
 
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = "ltr";
+    document.title = language === "th"
+      ? "Bangkok Kropper | ร้านบาร์เบอร์และกรูมมิ่งในกรุงเทพฯ"
+      : "Bangkok Kropper | Modern Barber Shop in Bangkok";
+    const description = language === "th"
+      ? "ร้านบาร์เบอร์มืออาชีพในกรุงเทพฯ ให้บริการตัดผม เฟด หนวดเครา ทรีตเมนต์ และกรูมมิ่งระดับพรีเมียม"
+      : "Precision haircuts, beard trims, styling, and premium grooming in Bangkok.";
+    let descriptionMeta = document.querySelector('meta[name="description"]');
+    if (!descriptionMeta) {
+      descriptionMeta = document.createElement("meta");
+      descriptionMeta.setAttribute("name", "description");
+      document.head.appendChild(descriptionMeta);
+    }
+    descriptionMeta.setAttribute("content", description);
   }, [language]);
 
   return (

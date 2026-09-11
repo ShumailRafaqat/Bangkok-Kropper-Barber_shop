@@ -2,6 +2,7 @@ export type OfferAudience = "men" | "women";
 
 export type OfferItem = {
   serviceId: string;
+  
   name: string;
   price: number;
 };

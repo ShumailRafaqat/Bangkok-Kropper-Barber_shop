@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Clock3, MapPin } from "lucide-react";
 import { getSeoService } from "@/data/seo-services";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { useI18n } from "@/lib/i18n";
+import { getServiceDescription, getServiceName } from "@/data/service-translations";
 
 export const Route = createFileRoute("/$serviceSlug")({
   head: ({ params }) => {
@@ -29,6 +31,7 @@ export const Route = createFileRoute("/$serviceSlug")({
 
 function ServicePage() {
   const { serviceSlug } = Route.useParams();
+  const { language } = useI18n();
   const service = getSeoService(serviceSlug);
 
   if (!service) {
@@ -51,6 +54,9 @@ function ServicePage() {
       </main>
     );
   }
+
+  const localizedName = getServiceName(language, service.slug, service.name);
+  const localizedDescription = getServiceDescription(language, service.slug, service.description);
 
   return (
     <div className="min-h-screen bg-background font-sans">
@@ -92,16 +98,16 @@ function ServicePage() {
           <span className="mx-2 text-border">/</span>
           <Link to="/services" className="transition-colors hover:text-primary">Services</Link>
           <span className="mx-2 text-border">/</span>
-          <span className="text-primary">{service.shortName}</span>
+            <span className="text-primary">{localizedName}</span>
         </nav>
 
         <section className="mt-8 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
           <div className="relative min-h-[22rem] overflow-hidden rounded-sm border border-primary/40 bg-card md:min-h-[30rem]">
-            <img src={service.image} alt={`${service.name} at Bangkok Kropper`} className="absolute inset-0 size-full object-cover" />
+            <img src={service.image} alt={`${localizedName} at Bangkok Kropper`} className="absolute inset-0 size-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/15 to-transparent" />
             <div className="absolute bottom-7 left-7 right-7">
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">Bangkok Kropper · Sukhumvit</p>
-              <h1 className="mt-3 max-w-xl font-display text-3xl uppercase leading-[0.95] text-foreground md:text-5xl">{service.name}</h1>
+              <h1 className="mt-3 max-w-xl font-display text-3xl uppercase leading-[0.95] text-foreground md:text-5xl">{localizedName}</h1>
             </div>
           </div>
 
@@ -110,8 +116,8 @@ function ServicePage() {
               <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-accent">
                 <Clock3 className="size-4" /> {service.minutes} min chair time
               </p>
-              <p className="mt-6 text-lg leading-8 text-muted-foreground">{service.description}</p>
-              <p className="mt-5 leading-7 text-muted-foreground">{service.details}</p>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">{localizedDescription}</p>
+              <p className="mt-5 leading-7 text-muted-foreground">{language === "th" ? "บริการที่ออกแบบให้เหมาะกับสภาพผมและสไตล์ของคุณ พร้อมคำแนะนำจากช่างมืออาชีพ" : service.details}</p>
             </div>
             <div className="mt-8 border-t border-border pt-6">
               <p className="text-xs font-bold uppercase tracking-[0.24em] text-muted-foreground">Service price</p>
@@ -131,7 +137,7 @@ function ServicePage() {
         <section className="mt-12 grid gap-8 border-y border-border py-10 md:grid-cols-[1fr_1fr]">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-accent">What is included</p>
-            <h2 className="mt-3 font-display text-2xl uppercase">Built for a clean finish</h2>
+            <h2 className="mt-3 font-display text-2xl uppercase">{language === "th" ? "ใส่ใจเพื่อผลลัพธ์ที่เรียบร้อย" : "Built for a clean finish"}</h2>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               {service.includes.map((item) => (
                 <li key={item} className="flex items-center gap-3 border border-border px-4 py-3 text-sm text-muted-foreground">

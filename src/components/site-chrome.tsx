@@ -18,6 +18,7 @@ const nav = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
+  { to: "/grooming-guide", label: "Blog" },
 ] as const;
 
 export const PHONE = "+66 92 905 0509";
@@ -39,9 +40,9 @@ export function SiteHeader() {
         type="button"
         onClick={() => setLanguage(language === "en" ? "th" : "en")}
         aria-label={language === "en" ? "Switch to Thai" : "Switch to English"}
-        className="px-2 py-1 text-[0.72rem] font-black uppercase tracking-[0.14em] text-primary transition-colors hover:text-foreground"
+        className="px-2 py-1 text-[0.68rem] font-black uppercase tracking-[0.12em] text-primary transition-colors hover:text-foreground"
       >
-        {language === "en" ? "THAI" : "ENGLISH"}
+        {language === "en" ? "THAI" : "ENG"}
       </button>
     </div>
   );
@@ -116,7 +117,7 @@ export function SiteHeader() {
               to={item.to}
               className={`whitespace-nowrap text-[0.61rem] font-semibold uppercase tracking-[0.12em] transition-colors hover:text-primary xl:text-[0.64rem] ${item.to === "/" ? (pathname === "/" && activeSection === "home" ? "border-b border-primary pb-1 text-primary" : "text-muted-foreground") : pathname.startsWith(item.to) || (item.to === "/services" && pathname === "/" && activeSection === "services") ? "border-b border-primary pb-1 text-primary" : "text-muted-foreground"}`}
             >
-              {item.label === "Home" ? t.home : item.label === "About" ? "About" : t.services}
+              {item.label === "Home" ? t.home : item.label === "About" ? t.about : item.label === "Blog" ? t.blog : t.services}
             </Link>
           ))}
           <a
@@ -185,7 +186,7 @@ export function SiteHeader() {
               onClick={() => setOpen(false)}
               className="block border-b border-border py-3 font-display text-xl tracking-wide text-foreground"
             >
-              {item.label === "Home" ? t.home : item.label === "About" ? "About" : t.services}
+              {item.label === "Home" ? t.home : item.label === "About" ? t.about : item.label === "Blog" ? t.blog : t.services}
             </Link>
           ))}
           <a

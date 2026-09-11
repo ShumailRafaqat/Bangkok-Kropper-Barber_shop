@@ -369,30 +369,6 @@ h6.font-display {
   animation: welcome-logo-inner-ring 1.8s 0.7s ease-in-out infinite alternate;
 }
 
-  top: 8%;
-  left: 5%;
-  transform: translateX(0);
-}
-
-.welcome-splash__word--bottom {
-  right: -0.04em;
-  bottom: 7%;
-  color: rgba(199, 154, 91, 0.1);
-  animation-name: welcome-word-bottom-in, welcome-bottom-drift;
-  animation-delay: 0.15s, 1.35s;
-  animation-duration: 1.25s, 4.2s;
-  animation-iteration-count: 1, infinite;
-  animation-direction: normal, alternate;
-}
-
-.welcome-splash--leaving .welcome-splash__word--top {
-  animation: welcome-word-exit-left 0.85s cubic-bezier(0.76, 0, 0.24, 1) both;
-}
-
-.welcome-splash--leaving .welcome-splash__word--bottom {
-  animation: welcome-word-exit-right 0.85s cubic-bezier(0.76, 0, 0.24, 1) both;
-}
-
 .welcome-splash--leaving .welcome-splash__line { animation: welcome-line-exit 0.85s cubic-bezier(0.76, 0, 0.24, 1) both; }
 
 .welcome-splash__content {

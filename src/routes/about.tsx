@@ -66,11 +66,10 @@ function AboutPage() {
     <div className="about-page min-h-screen bg-background font-sans text-foreground">
       <SiteHeader />
       <main>
-        <section className="relative overflow-hidden border-b border-border px-5 py-20 md:py-24">
+        <section className="relative overflow-hidden border-y border-primary/40 px-5 py-20 md:py-24">
           <div className="pointer-events-none absolute -right-12 top-20 font-display text-[13rem] leading-none text-primary/[0.035] md:text-[24rem]">01</div>
-          <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div><p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">The Kropper Story</p><h1 className="mt-6 max-w-xl font-display text-4xl leading-[0.92] md:text-6xl">Built on Experience<br /><span className="text-primary">Defined by Craft</span></h1><p className="mt-7 max-w-lg text-base leading-8 text-muted-foreground">Bangkok Kropper Barber Shop was built by barbers who spent more than a decade mastering the craft together. What began as a shared ambition became a place where skilled hands, serious hygiene and genuine hospitality come together.</p><a href="#story" className="mt-9 inline-flex items-center gap-2 bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-primary-foreground hover:bg-accent">Discover Our Story <ArrowRight className="size-4" /></a></div>
-            <div className="relative min-h-[22rem] overflow-hidden border border-border md:min-h-[30rem]"><img src="/hero.png" alt="Bangkok Kropper Barber Shop" className="size-full object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-background/75 via-transparent to-transparent" /><span className="absolute bottom-5 left-5 border-l-2 border-primary bg-background/75 px-4 py-3 text-xs font-bold uppercase tracking-[0.18em] backdrop-blur-sm">Bangkok Kropper · Est. 2024</span></div>
+          <div className="relative mx-auto max-w-7xl">
+            <div className="max-w-3xl"><p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">The Kropper Story</p><h1 className="mt-6 max-w-xl font-display text-4xl leading-[0.92] md:text-6xl">Built on Experience<br /><span className="text-primary">Defined by Craft</span></h1><p className="mt-7 max-w-2xl text-base leading-8 text-muted-foreground">Bangkok Kropper Barber Shop was built by barbers who spent more than a decade mastering the craft together. What began as a shared ambition became a place where skilled hands, serious hygiene and genuine hospitality come together.</p><a href="#story" className="mt-9 inline-flex items-center gap-2 bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-primary-foreground hover:bg-accent">Discover Our Story <ArrowRight className="size-4" /></a></div>
           </div>
         </section>
 
@@ -113,15 +112,14 @@ function ThaiAboutPage() {
     <div className="min-h-screen bg-background font-sans text-foreground">
       <SiteHeader />
       <main>
-        <section className="border-b border-border px-5 py-20 md:py-28">
-          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <section className="border-y border-primary/40 px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">เรื่องราวของ Kropper</p>
               <h1 className="mt-5 max-w-xl font-display text-4xl leading-tight md:text-6xl">สร้างจากประสบการณ์<br /><span className="text-primary">ใส่ใจในทุกฝีมือ</span></h1>
               <p className="mt-7 max-w-lg text-base leading-8 text-muted-foreground">Bangkok Kropper เกิดจากช่างตัดผมที่ทำงานร่วมกันมานานกว่าสิบปี เราสร้างพื้นที่ที่รวมฝีมือ ความสะอาด และการดูแลลูกค้าอย่างจริงใจไว้ด้วยกัน</p>
               <a href="#story" className="mt-8 inline-flex items-center bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-primary-foreground">รู้จักเรื่องราวของเรา</a>
             </div>
-            <div className="overflow-hidden border border-border"><img src="/hero.png" alt="ร้าน Bangkok Kropper Barber Shop" className="h-full min-h-[22rem] w-full object-cover" /></div>
           </div>
         </section>
         <section id="story" className="border-b border-border bg-secondary/35 px-5 py-20 md:py-28">

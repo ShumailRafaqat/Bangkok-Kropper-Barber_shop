@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowLeft, ArrowRight, Clock3, Flame, MapPin, ShieldCheck, Sparkles, UserRound, X } from "lucide-react";
 import { BookingFlow } from "@/components/booking-flow";
 import { SiteHeader } from "@/components/site-chrome";
@@ -44,26 +44,44 @@ export const Route = createFileRoute("/book")({
 
 function BookPage() {
   const { language, t } = useI18n();
+  const [hasDeal] = useState(() => typeof window !== "undefined" && new URLSearchParams(window.location.search).has("deal"));
+  const [showStartPrompt, setShowStartPrompt] = useState(() => !hasDeal);
+  const [bookingPrompt, setBookingPrompt] = useState<"channel" | "none">(hasDeal ? "channel" : "none");
   const [showDeals, setShowDeals] = useState(false);
   const [showAudiencePicker, setShowAudiencePicker] = useState(false);
   const [dealAudience, setDealAudience] = useState<OfferAudience | null>(null);
 
-  useEffect(() => {
-    const hasDeal = new URLSearchParams(window.location.search).has("deal");
-    if (!hasDeal) setShowDeals(true);
-  }, []);
+  const chooseRegular = () => {
+    setShowStartPrompt(false);
+    setBookingPrompt("channel");
+  };
 
-  const closeDeals = () => {
-    setShowDeals(false);
+  const chooseDeal = () => {
+    setShowStartPrompt(false);
+    setShowDeals(true);
   };
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background pb-24 pt-28">
       <SiteHeader />
+      {showStartPrompt && (
+        <div className="fixed inset-0 z-[70] grid place-items-center bg-black/70 px-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="booking-type-title">
+          <div className="relative w-full max-w-md border border-primary/45 bg-background p-6 text-center shadow-2xl sm:p-8">
+            <button type="button" onClick={() => setShowStartPrompt(false)} aria-label="Close booking options" className="absolute right-4 top-4 grid size-9 place-items-center rounded-full border border-primary/60 bg-background text-primary hover:bg-primary hover:text-primary-foreground"><X className="size-4" /></button>
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">Bangkok Kropper</p>
+            <h2 id="booking-type-title" className="mt-3 font-display text-2xl text-foreground">What would you like to book?</h2>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">Choose a regular service or a special deal to begin.</p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <button type="button" onClick={chooseRegular} className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-3 text-xs font-bold uppercase tracking-[0.14em] text-primary-foreground">Regular Service</button>
+              <button type="button" onClick={chooseDeal} className="inline-flex items-center justify-center rounded-full border border-primary/60 px-4 py-3 text-xs font-bold uppercase tracking-[0.14em] text-primary">Deal</button>
+            </div>
+          </div>
+        </div>
+      )}
       {showDeals && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-foreground/35 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="booking-deals-title">
           <div className="relative max-h-[90vh] w-full max-w-2xl animate-rise overflow-y-auto rounded-2xl border border-border bg-background p-5 shadow-2xl sm:p-8">
-            <button type="button" onClick={closeDeals} aria-label="Close special deals" className="absolute right-4 top-4 grid size-9 place-items-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary">
+            <button type="button" onClick={() => setShowDeals(false)} aria-label="Close special deals" className="absolute right-4 top-4 grid size-9 place-items-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary">
               <X className="size-4" />
             </button>
             <p className="flex items-center gap-2 text-[0.62rem] font-bold uppercase tracking-[0.3em] text-primary"><Flame className="size-4" /> {t.beforeBook}</p>
@@ -73,7 +91,7 @@ function BookPage() {
                 <p className="mt-3 max-w-lg text-sm leading-6 text-muted-foreground">{t.beforeBookText}</p>
                 <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                   <button type="button" onClick={() => setShowAudiencePicker(true)} className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-4 py-3 text-xs font-bold uppercase tracking-[0.16em] text-primary-foreground transition-all hover:-translate-y-0.5 hover:bg-accent">{t.viewSpecialDeals} <ArrowRight className="size-3.5" /></button>
-                  <button type="button" onClick={closeDeals} className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-4 py-3 text-xs font-bold uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:border-primary hover:text-primary">{t.continueRegular}</button>
+                  <button type="button" onClick={() => { setShowDeals(false); setBookingPrompt("channel"); }} className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-4 py-3 text-xs font-bold uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:border-primary hover:text-primary">{t.continueRegular}</button>
                 </div>
               </>
             ) : (
@@ -97,7 +115,7 @@ function BookPage() {
                       <article key={offer.id} className="rounded-xl border border-border bg-secondary/30 p-4">
                         <div className="flex items-start justify-between gap-3"><h3 className="font-display text-xl uppercase text-foreground">{language === "th" ? offerThaiNames[offer.id] ?? offer.name : offer.name}</h3><span className="shrink-0 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-primary">{language === "th" ? t.saveLabel : "Save"} {offer.savings} THB</span></div>
                         <div className="mt-3 space-y-1 text-xs text-muted-foreground">{offer.items.map((item) => <p key={item.serviceId}>{getServiceName(language, item.serviceId, item.name)}</p>)}</div>
-                        <div className="mt-4 flex items-end justify-between border-t border-border pt-3"><div><p className="text-[0.62rem] text-muted-foreground line-through">{offer.originalTotal.toLocaleString()} THB</p><p className="font-display text-2xl text-primary">{offer.dealPrice.toLocaleString()} THB</p></div><a href={`/book?deal=${offer.id}`} onClick={closeDeals} className="inline-flex items-center gap-1 rounded-full bg-primary px-3 py-2 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-primary-foreground hover:bg-accent">{t.bookDeal} <ArrowRight className="size-3" /></a></div>
+                        <div className="mt-4 flex items-end justify-between border-t border-border pt-3"><div><p className="text-[0.62rem] text-muted-foreground line-through">{offer.originalTotal.toLocaleString()} THB</p><p className="font-display text-2xl text-primary">{offer.dealPrice.toLocaleString()} THB</p></div><a href={`/book?deal=${offer.id}`} className="inline-flex items-center gap-1 rounded-full bg-primary px-3 py-2 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-primary-foreground hover:bg-accent">{t.bookDeal} <ArrowRight className="size-3" /></a></div>
                       </article>
                     ))}
                   </div>
@@ -156,7 +174,7 @@ function BookPage() {
             </div>
 
             <div className="animate-rise mt-6">
-              <BookingFlow />
+              <BookingFlow initialPrompt={bookingPrompt} />
             </div>
           </div>
         </div>

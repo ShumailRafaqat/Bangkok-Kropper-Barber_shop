@@ -279,6 +279,462 @@ function prettyDate(iso: string, language: "en" | "th" = "en") {
   });
 }
 
+const COUNTRY_CODES = [
+  { code: "+1", flag: "🇺🇸", label: "United States (+1)" },
+  { code: "+7", flag: "🇷🇺", label: "Russia (+7)" },
+  { code: "+20", flag: "🇪🇬", label: "Egypt (+20)" },
+  { code: "+27", flag: "🇿🇦", label: "South Africa (+27)" },
+  { code: "+30", flag: "🇬🇷", label: "Greece (+30)" },
+  { code: "+31", flag: "🇳🇱", label: "Netherlands (+31)" },
+  { code: "+32", flag: "🇧🇪", label: "Belgium (+32)" },
+  { code: "+33", flag: "🇫🇷", label: "France (+33)" },
+  { code: "+34", flag: "🇪🇸", label: "Spain (+34)" },
+  { code: "+36", flag: "🇭🇺", label: "Hungary (+36)" },
+  { code: "+39", flag: "🇮🇹", label: "Italy (+39)" },
+  { code: "+41", flag: "🇨🇭", label: "Switzerland (+41)" },
+  { code: "+43", flag: "🇦🇹", label: "Austria (+43)" },
+  { code: "+44", flag: "🇬🇧", label: "United Kingdom (+44)" },
+  { code: "+45", flag: "🇩🇰", label: "Denmark (+45)" },
+  { code: "+46", flag: "🇸🇪", label: "Sweden (+46)" },
+  { code: "+47", flag: "🇳🇴", label: "Norway (+47)" },
+  { code: "+48", flag: "🇵🇱", label: "Poland (+48)" },
+  { code: "+49", flag: "🇩🇪", label: "Germany (+49)" },
+  { code: "+51", flag: "🇵🇪", label: "Peru (+51)" },
+  { code: "+52", flag: "🇲🇽", label: "Mexico (+52)" },
+  { code: "+53", flag: "🇨🇺", label: "Cuba (+53)" },
+  { code: "+54", flag: "🇦🇷", label: "Argentina (+54)" },
+  { code: "+55", flag: "🇧🇷", label: "Brazil (+55)" },
+  { code: "+56", flag: "🇨🇱", label: "Chile (+56)" },
+  { code: "+57", flag: "🇨🇴", label: "Colombia (+57)" },
+  { code: "+58", flag: "🇻🇪", label: "Venezuela (+58)" },
+  { code: "+60", flag: "🇲🇾", label: "Malaysia (+60)" },
+  { code: "+61", flag: "🇦🇺", label: "Australia (+61)" },
+  { code: "+62", flag: "🇮🇩", label: "Indonesia (+62)" },
+  { code: "+63", flag: "🇵🇭", label: "Philippines (+63)" },
+  { code: "+64", flag: "🇳🇿", label: "New Zealand (+64)" },
+  { code: "+65", flag: "🇸🇬", label: "Singapore (+65)" },
+  { code: "+66", flag: "🇹🇭", label: "Thailand (+66)" },
+  { code: "+81", flag: "🇯🇵", label: "Japan (+81)" },
+  { code: "+82", flag: "🇰🇷", label: "South Korea (+82)" },
+  { code: "+84", flag: "🇻🇳", label: "Vietnam (+84)" },
+  { code: "+86", flag: "🇨🇳", label: "China (+86)" },
+  { code: "+90", flag: "🇹🇷", label: "Turkey (+90)" },
+  { code: "+91", flag: "🇮🇳", label: "India (+91)" },
+  { code: "+92", flag: "🇵🇰", label: "Pakistan (+92)" },
+  { code: "+94", flag: "🇱🇰", label: "Sri Lanka (+94)" },
+  { code: "+95", flag: "🇲🇲", label: "Myanmar (+95)" },
+  { code: "+98", flag: "🇮🇷", label: "Iran (+98)" },
+  { code: "+211", flag: "🇸🇸", label: "South Sudan (+211)" },
+  { code: "+212", flag: "🇲🇦", label: "Morocco (+212)" },
+  { code: "+213", flag: "🇩🇿", label: "Algeria (+213)" },
+  { code: "+216", flag: "🇹🇳", label: "Tunisia (+216)" },
+  { code: "+218", flag: "🇱🇾", label: "Libya (+218)" },
+  { code: "+220", flag: "🇬🇲", label: "Gambia (+220)" },
+  { code: "+221", flag: "🇸🇳", label: "Senegal (+221)" },
+  { code: "+222", flag: "🇲🇷", label: "Mauritania (+222)" },
+  { code: "+223", flag: "🇲🇱", label: "Mali (+223)" },
+  { code: "+224", flag: "🇬🇳", label: "Guinea (+224)" },
+  { code: "+225", flag: "🇨🇮", label: "Ivory Coast (+225)" },
+  { code: "+226", flag: "🇧🇫", label: "Burkina Faso (+226)" },
+  { code: "+227", flag: "🇳🇪", label: "Niger (+227)" },
+  { code: "+228", flag: "🇹🇬", label: "Togo (+228)" },
+  { code: "+229", flag: "🇧🇯", label: "Benin (+229)" },
+  { code: "+230", flag: "🇲🇺", label: "Mauritius (+230)" },
+  { code: "+231", flag: "🇱🇷", label: "Liberia (+231)" },
+  { code: "+232", flag: "🇸🇱", label: "Sierra Leone (+232)" },
+  { code: "+233", flag: "🇬🇭", label: "Ghana (+233)" },
+  { code: "+234", flag: "🇳🇬", label: "Nigeria (+234)" },
+  { code: "+235", flag: "🇹🇩", label: "Chad (+235)" },
+  { code: "+236", flag: "🇨🇫", label: "Central African Republic (+236)" },
+  { code: "+237", flag: "🇨🇲", label: "Cameroon (+237)" },
+  { code: "+238", flag: "🇨🇻", label: "Cape Verde (+238)" },
+  { code: "+239", flag: "🇸🇹", label: "Sao Tome and Principe (+239)" },
+  { code: "+240", flag: "🇬🇶", label: "Equatorial Guinea (+240)" },
+  { code: "+241", flag: "🇬🇦", label: "Gabon (+241)" },
+  { code: "+242", flag: "🇨🇬", label: "Congo (+242)" },
+  { code: "+243", flag: "🇨🇩", label: "DR Congo (+243)" },
+  { code: "+244", flag: "🇦🇴", label: "Angola (+244)" },
+  { code: "+245", flag: "🇬🇼", label: "Guinea-Bissau (+245)" },
+  { code: "+248", flag: "🇸🇨", label: "Seychelles (+248)" },
+  { code: "+249", flag: "🇸🇩", label: "Sudan (+249)" },
+  { code: "+250", flag: "🇷🇼", label: "Rwanda (+250)" },
+  { code: "+251", flag: "🇪🇹", label: "Ethiopia (+251)" },
+  { code: "+252", flag: "🇸🇴", label: "Somalia (+252)" },
+  { code: "+253", flag: "🇩🇯", label: "Djibouti (+253)" },
+  { code: "+254", flag: "🇰🇪", label: "Kenya (+254)" },
+  { code: "+255", flag: "🇹🇿", label: "Tanzania (+255)" },
+  { code: "+256", flag: "🇺🇬", label: "Uganda (+256)" },
+  { code: "+257", flag: "🇧🇮", label: "Burundi (+257)" },
+  { code: "+258", flag: "🇲🇿", label: "Mozambique (+258)" },
+  { code: "+260", flag: "🇿🇲", label: "Zambia (+260)" },
+  { code: "+261", flag: "🇲🇬", label: "Madagascar (+261)" },
+  { code: "+263", flag: "🇿🇼", label: "Zimbabwe (+263)" },
+  { code: "+264", flag: "🇳🇦", label: "Namibia (+264)" },
+  { code: "+265", flag: "🇲🇼", label: "Malawi (+265)" },
+  { code: "+266", flag: "🇱🇸", label: "Lesotho (+266)" },
+  { code: "+267", flag: "🇧🇼", label: "Botswana (+267)" },
+  { code: "+268", flag: "🇸🇿", label: "Eswatini (+268)" },
+  { code: "+269", flag: "🇰🇲", label: "Comoros (+269)" },
+  { code: "+291", flag: "🇪🇷", label: "Eritrea (+291)" },
+  { code: "+297", flag: "🇦🇼", label: "Aruba (+297)" },
+  { code: "+298", flag: "🇫🇴", label: "Faroe Islands (+298)" },
+  { code: "+299", flag: "🇬🇱", label: "Greenland (+299)" },
+  { code: "+351", flag: "🇵🇹", label: "Portugal (+351)" },
+  { code: "+352", flag: "🇱🇺", label: "Luxembourg (+352)" },
+  { code: "+353", flag: "🇮🇪", label: "Ireland (+353)" },
+  { code: "+354", flag: "🇮🇸", label: "Iceland (+354)" },
+  { code: "+355", flag: "🇦🇱", label: "Albania (+355)" },
+  { code: "+356", flag: "🇲🇹", label: "Malta (+356)" },
+  { code: "+357", flag: "🇨🇾", label: "Cyprus (+357)" },
+  { code: "+358", flag: "🇫🇮", label: "Finland (+358)" },
+  { code: "+370", flag: "🇱🇹", label: "Lithuania (+370)" },
+  { code: "+371", flag: "🇱🇻", label: "Latvia (+371)" },
+  { code: "+372", flag: "🇪🇪", label: "Estonia (+372)" },
+  { code: "+373", flag: "🇲🇩", label: "Moldova (+373)" },
+  { code: "+374", flag: "🇦🇲", label: "Armenia (+374)" },
+  { code: "+375", flag: "🇧🇾", label: "Belarus (+375)" },
+  { code: "+376", flag: "🇦🇩", label: "Andorra (+376)" },
+  { code: "+377", flag: "🇲🇨", label: "Monaco (+377)" },
+  { code: "+378", flag: "🇸🇲", label: "San Marino (+378)" },
+  { code: "+380", flag: "🇺🇦", label: "Ukraine (+380)" },
+  { code: "+381", flag: "🇷🇸", label: "Serbia (+381)" },
+  { code: "+382", flag: "🇲🇪", label: "Montenegro (+382)" },
+  { code: "+385", flag: "🇭🇷", label: "Croatia (+385)" },
+  { code: "+386", flag: "🇸🇮", label: "Slovenia (+386)" },
+  { code: "+387", flag: "🇧🇦", label: "Bosnia and Herzegovina (+387)" },
+  { code: "+389", flag: "🇲🇰", label: "North Macedonia (+389)" },
+  { code: "+420", flag: "🇨🇿", label: "Czech Republic (+420)" },
+  { code: "+421", flag: "🇸🇰", label: "Slovakia (+421)" },
+  { code: "+423", flag: "🇱🇮", label: "Liechtenstein (+423)" },
+  { code: "+500", flag: "🇫🇰", label: "Falkland Islands (+500)" },
+  { code: "+501", flag: "🇧🇿", label: "Belize (+501)" },
+  { code: "+502", flag: "🇬🇹", label: "Guatemala (+502)" },
+  { code: "+503", flag: "🇸🇻", label: "El Salvador (+503)" },
+  { code: "+504", flag: "🇭🇳", label: "Honduras (+504)" },
+  { code: "+505", flag: "🇳🇮", label: "Nicaragua (+505)" },
+  { code: "+506", flag: "🇨🇷", label: "Costa Rica (+506)" },
+  { code: "+507", flag: "🇵🇦", label: "Panama (+507)" },
+  { code: "+509", flag: "🇭🇹", label: "Haiti (+509)" },
+  { code: "+590", flag: "🇬🇵", label: "Guadeloupe (+590)" },
+  { code: "+591", flag: "🇧🇴", label: "Bolivia (+591)" },
+  { code: "+592", flag: "🇬🇾", label: "Guyana (+592)" },
+  { code: "+593", flag: "🇪🇨", label: "Ecuador (+593)" },
+  { code: "+594", flag: "🇬🇫", label: "French Guiana (+594)" },
+  { code: "+595", flag: "🇵🇾", label: "Paraguay (+595)" },
+  { code: "+596", flag: "🇲🇶", label: "Martinique (+596)" },
+  { code: "+597", flag: "🇸🇷", label: "Suriname (+597)" },
+  { code: "+598", flag: "🇺🇾", label: "Uruguay (+598)" },
+  { code: "+599", flag: "🇧🇶", label: "Caribbean Netherlands (+599)" },
+  { code: "+670", flag: "🇹🇱", label: "Timor-Leste (+670)" },
+  { code: "+672", flag: "🇦🇨", label: "Antarctica (+672)" },
+  { code: "+675", flag: "🇵🇬", label: "Papua New Guinea (+675)" },
+  { code: "+676", flag: "🇹🇴", label: "Tonga (+676)" },
+  { code: "+677", flag: "🇸🇧", label: "Solomon Islands (+677)" },
+  { code: "+678", flag: "🇻🇺", label: "Vanuatu (+678)" },
+  { code: "+679", flag: "🇫🇯", label: "Fiji (+679)" },
+  { code: "+680", flag: "🇵🇼", label: "Palau (+680)" },
+  { code: "+681", flag: "🇼🇫", label: "Wallis and Futuna (+681)" },
+  { code: "+682", flag: "🇨🇰", label: "Cook Islands (+682)" },
+  { code: "+683", flag: "🇳🇺", label: "Niue (+683)" },
+  { code: "+685", flag: "🇼🇸", label: "Samoa (+685)" },
+  { code: "+686", flag: "🇰🇮", label: "Kiribati (+686)" },
+  { code: "+687", flag: "🇳🇨", label: "New Caledonia (+687)" },
+  { code: "+688", flag: "🇹🇻", label: "Tuvalu (+688)" },
+  { code: "+689", flag: "🇵🇫", label: "French Polynesia (+689)" },
+  { code: "+690", flag: "🇹🇰", label: "Tokelau (+690)" },
+  { code: "+691", flag: "🇫🇲", label: "Micronesia (+691)" },
+  { code: "+692", flag: "🇲🇭", label: "Marshall Islands (+692)" },
+  { code: "+850", flag: "🇰🇵", label: "North Korea (+850)" },
+  { code: "+852", flag: "🇭🇰", label: "Hong Kong (+852)" },
+  { code: "+853", flag: "🇲🇴", label: "Macau (+853)" },
+  { code: "+886", flag: "🇹🇼", label: "Taiwan (+886)" },
+  { code: "+960", flag: "🇲🇻", label: "Maldives (+960)" },
+  { code: "+961", flag: "🇱🇧", label: "Lebanon (+961)" },
+  { code: "+962", flag: "🇯🇴", label: "Jordan (+962)" },
+  { code: "+963", flag: "🇸🇾", label: "Syria (+963)" },
+  { code: "+964", flag: "🇮🇶", label: "Iraq (+964)" },
+  { code: "+965", flag: "🇰🇼", label: "Kuwait (+965)" },
+  { code: "+966", flag: "🇸🇦", label: "Saudi Arabia (+966)" },
+  { code: "+967", flag: "🇾🇪", label: "Yemen (+967)" },
+  { code: "+968", flag: "🇴🇲", label: "Oman (+968)" },
+  { code: "+971", flag: "🇦🇪", label: "United Arab Emirates (+971)" },
+  { code: "+972", flag: "🇮🇱", label: "Israel (+972)" },
+  { code: "+973", flag: "🇧🇭", label: "Bahrain (+973)" },
+  { code: "+974", flag: "🇶🇦", label: "Qatar (+974)" },
+  { code: "+975", flag: "🇧🇹", label: "Bhutan (+975)" },
+  { code: "+976", flag: "🇲🇳", label: "Mongolia (+976)" },
+  { code: "+977", flag: "🇳🇵", label: "Nepal (+977)" },
+  { code: "+992", flag: "🇹🇯", label: "Tajikistan (+992)" },
+  { code: "+993", flag: "🇹🇲", label: "Turkmenistan (+993)" },
+  { code: "+994", flag: "🇦🇿", label: "Azerbaijan (+994)" },
+  { code: "+995", flag: "🇬🇪", label: "Georgia (+995)" },
+  { code: "+996", flag: "🇰🇬", label: "Kyrgyzstan (+996)" },
+  { code: "+998", flag: "🇺🇿", label: "Uzbekistan (+998)" },
+  { code: "+1242", flag: "🇧🇸", label: "Bahamas (+1242)" },
+  { code: "+1246", flag: "🇧🇧", label: "Barbados (+1246)" },
+  { code: "+1264", flag: "🇦🇮", label: "Anguilla (+1264)" },
+  { code: "+1268", flag: "🇦🇬", label: "Antigua and Barbuda (+1268)" },
+  { code: "+1284", flag: "🇻🇬", label: "British Virgin Islands (+1284)" },
+  { code: "+1340", flag: "🇻🇮", label: "U.S. Virgin Islands (+1340)" },
+  { code: "+1345", flag: "🇰🇾", label: "Cayman Islands (+1345)" },
+  { code: "+1441", flag: "🇧🇲", label: "Bermuda (+1441)" },
+  { code: "+1473", flag: "🇬🇩", label: "Grenada (+1473)" },
+  { code: "+1649", flag: "🇹🇨", label: "Turks and Caicos Islands (+1649)" },
+  { code: "+1664", flag: "🇲🇸", label: "Montserrat (+1664)" },
+  { code: "+1670", flag: "🇲🇵", label: "Northern Mariana Islands (+1670)" },
+  { code: "+1671", flag: "🇬🇺", label: "Guam (+1671)" },
+  { code: "+1684", flag: "🇦🇸", label: "American Samoa (+1684)" },
+  { code: "+1758", flag: "🇱🇨", label: "Saint Lucia (+1758)" },
+  { code: "+1767", flag: "🇩🇲", label: "Dominica (+1767)" },
+  { code: "+1784", flag: "🇻🇨", label: "Saint Vincent and the Grenadines (+1784)" },
+  { code: "+1787", flag: "🇵🇷", label: "Puerto Rico (+1787)" },
+  { code: "+1868", flag: "🇹🇹", label: "Trinidad and Tobago (+1868)" },
+  { code: "+1869", flag: "🇰🇳", label: "Saint Kitts and Nevis (+1869)" },
+  { code: "+1876", flag: "🇯🇲", label: "Jamaica (+1876)" },
+] as const;
+
+const COUNTRY_PHONE_LIMITS: Record<string, number> = {
+  "+1": 10,
+  "+7": 10,
+  "+20": 9,
+  "+27": 9,
+  "+30": 10,
+  "+31": 9,
+  "+32": 9,
+  "+33": 9,
+  "+34": 9,
+  "+36": 9,
+  "+39": 9,
+  "+41": 9,
+  "+43": 10,
+  "+44": 10,
+  "+45": 8,
+  "+46": 9,
+  "+47": 8,
+  "+48": 9,
+  "+49": 11,
+  "+51": 9,
+  "+52": 10,
+  "+54": 10,
+  "+55": 11,
+  "+56": 9,
+  "+57": 10,
+  "+60": 9,
+  "+61": 9,
+  "+62": 11,
+  "+63": 10,
+  "+64": 9,
+  "+65": 8,
+  "+66": 9,
+  "+81": 10,
+  "+82": 10,
+  "+84": 9,
+  "+86": 11,
+  "+90": 10,
+  "+91": 10,
+  "+92": 10,
+  "+94": 9,
+  "+95": 9,
+  "+98": 10,
+  "+211": 9,
+  "+212": 9,
+  "+213": 9,
+  "+216": 8,
+  "+218": 9,
+  "+220": 7,
+  "+221": 9,
+  "+223": 8,
+  "+224": 8,
+  "+225": 8,
+  "+226": 8,
+  "+227": 8,
+  "+228": 8,
+  "+229": 8,
+  "+230": 8,
+  "+231": 7,
+  "+232": 8,
+  "+233": 9,
+  "+234": 10,
+  "+236": 8,
+  "+237": 9,
+  "+238": 8,
+  "+245": 7,
+  "+250": 9,
+  "+251": 9,
+  "+254": 9,
+  "+255": 9,
+  "+256": 9,
+  "+257": 8,
+  "+260": 9,
+  "+261": 9,
+  "+263": 9,
+  "+264": 9,
+  "+265": 8,
+  "+266": 8,
+  "+267": 8,
+  "+268": 7,
+  "+291": 7,
+  "+351": 9,
+  "+352": 6,
+  "+353": 9,
+  "+354": 7,
+  "+355": 9,
+  "+356": 8,
+  "+357": 8,
+  "+358": 11,
+  "+370": 8,
+  "+371": 8,
+  "+372": 7,
+  "+373": 8,
+  "+374": 8,
+  "+375": 9,
+  "+376": 6,
+  "+380": 9,
+  "+381": 9,
+  "+385": 9,
+  "+386": 8,
+  "+420": 9,
+  "+421": 9,
+  "+500": 5,
+  "+501": 7,
+  "+502": 8,
+  "+503": 8,
+  "+504": 8,
+  "+505": 8,
+  "+506": 8,
+  "+507": 8,
+  "+509": 8,
+  "+591": 8,
+  "+593": 9,
+  "+595": 9,
+  "+598": 8,
+  "+670": 7,
+  "+675": 8,
+  "+676": 7,
+  "+677": 5,
+  "+678": 5,
+  "+679": 7,
+  "+680": 7,
+  "+685": 7,
+  "+686": 8,
+  "+687": 6,
+  "+688": 5,
+  "+689": 6,
+  "+691": 7,
+  "+692": 7,
+  "+850": 9,
+  "+852": 8,
+  "+853": 8,
+  "+886": 9,
+  "+960": 7,
+  "+961": 8,
+  "+962": 9,
+  "+963": 9,
+  "+964": 10,
+  "+965": 8,
+  "+966": 9,
+  "+967": 9,
+  "+968": 8,
+  "+971": 9,
+  "+972": 9,
+  "+973": 8,
+  "+974": 8,
+  "+975": 8,
+  "+976": 8,
+  "+977": 10,
+  "+992": 9,
+  "+993": 8,
+  "+994": 9,
+  "+995": 9,
+  "+996": 9,
+  "+998": 9,
+  "+1242": 10,
+  "+1246": 10,
+  "+1264": 7,
+  "+1284": 7,
+  "+1345": 10,
+  "+1441": 10,
+  "+1473": 10,
+  "+1649": 10,
+  "+1664": 10,
+  "+1670": 10,
+  "+1671": 10,
+  "+1684": 10,
+  "+1758": 7,
+  "+1767": 7,
+  "+1784": 7,
+  "+1787": 10,
+  "+1868": 10,
+  "+1869": 10,
+  "+1876": 10,
+};
+
+const COUNTRY_PHONE_GROUPS: Record<string, number[]> = {
+  "+1": [3, 3, 4],
+  "+44": [4, 6],
+  "+49": [3, 3, 3, 2],
+  "+61": [2, 4, 3],
+  "+65": [4, 4],
+  "+66": [3, 3, 3],
+  "+81": [4, 2, 4],
+  "+91": [5, 5],
+  "+92": [4, 6],
+  "+971": [3, 3, 3],
+  "+966": [3, 3, 3],
+};
+
+function getPhoneMaxLength(code: string) {
+  return code.length + 1 + (COUNTRY_PHONE_LIMITS[code] ?? 12);
+}
+
+function groupPhoneDigits(value: string, code: string) {
+  const groups = COUNTRY_PHONE_GROUPS[code];
+  if (groups) {
+    const chunks: string[] = [];
+    let remaining = value;
+
+    for (let i = 0; i < groups.length && remaining.length > 0; i += 1) {
+      const size = groups[i]!;
+      if (i === groups.length - 1 || remaining.length <= size) {
+        chunks.push(remaining);
+        remaining = "";
+        break;
+      }
+      chunks.push(remaining.slice(0, size));
+      remaining = remaining.slice(size);
+    }
+
+    if (remaining) {
+      chunks.push(remaining);
+    }
+
+    return chunks.join(" ");
+  }
+
+  if (value.length <= 4) {
+    return value;
+  }
+
+  const chunks: string[] = [];
+  for (let i = 0; i < value.length; i += 3) {
+    chunks.push(value.slice(i, i + 3));
+  }
+  return chunks.join(" ");
+}
+
+function formatPhoneValue(rawValue: string, code: string) {
+  const digits = rawValue.replace(/\D/g, "");
+  const codeDigits = code.replace(/\D/g, "");
+  const withoutCode = digits.startsWith(codeDigits) ? digits.slice(codeDigits.length) : digits;
+  const compact = withoutCode.slice(0, COUNTRY_PHONE_LIMITS[code] ?? 12).replace(/\D/g, "");
+
+  if (!compact) {
+    return code;
+  }
+
+  return `${code} ${groupPhoneDigits(compact, code)}`.trim();
+}
+
 function buildDays(count: number) {
   const out: Date[] = [];
   const today = new Date();
@@ -290,7 +746,11 @@ function buildDays(count: number) {
   return out;
 }
 
-export function BookingFlow() {
+type BookingFlowProps = {
+  initialPrompt?: "channel" | "none";
+};
+
+export function BookingFlow({ initialPrompt = "none" }: BookingFlowProps) {
   const { language, t } = useI18n();
   const localizedSteps = language === "th" ? ["บริการ", "วันที่", "เวลา", "รายละเอียด", "ยืนยัน"] : steps;
   const days = useMemo(() => buildDays(21), []);
@@ -299,20 +759,40 @@ export function BookingFlow() {
   const [selectedServices, setSelectedServices] = useState<Svc[]>([]);
   const [matchedOffer, setMatchedOffer] = useState<SpecialOffer | null>(null);
   const [showDealNotice, setShowDealNotice] = useState(false);
-  const [showBookingOptions, setShowBookingOptions] = useState(true);
+  const [bookingStarted, setBookingStarted] = useState(false);
+  const [showBookingOptions, setShowBookingOptions] = useState(initialPrompt === "channel");
+  const [showLocationOptions, setShowLocationOptions] = useState(false);
+  const [location, setLocation] = useState<string | null>(null);
   const [date, setDate] = useState<string | null>(null);
   const [time, setTime] = useState<string | null>(null);
   const [contactMethod, setContactMethod] = useState<"whatsapp" | "line" | null>(null);
-  const [location, setLocation] = useState<string | null>(null);
   const [name, setName] = useState("");
+  const [countryCode, setCountryCode] = useState<string>(COUNTRY_CODES[0]!.code);
   const [phone, setPhone] = useState("");
   const [lineId, setLineId] = useState("");
+  const selectedCountry = COUNTRY_CODES.find((item) => item.code === countryCode) ?? COUNTRY_CODES[0]!;
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
   const [serviceFilter, setServiceFilter] = useState<(typeof serviceFilters)[number]>("All");
   const channelLabel = (method: "whatsapp" | "line") => (method === "line" ? "LINE" : "WhatsApp");
+  const currentChannel = contactMethod ?? "whatsapp";
+  const isLineChannel = currentChannel === "line";
+  const selectChannel = (method: "whatsapp" | "line") => {
+    setBookingStarted(true);
+    setContactMethod(method);
+    setError(null);
+    if (method === "line") {
+      setPhone("");
+    } else {
+      setLineId("");
+    }
+    setShowBookingOptions(false);
+  };
+  useEffect(() => {
+    if (initialPrompt === "channel" && !contactMethod) setShowBookingOptions(true);
+  }, [initialPrompt, contactMethod]);
   useEffect(() => {
     const offer = specialOffers.find(
       (item) => item.id === new URLSearchParams(window.location.search).get("deal"),
@@ -419,7 +899,9 @@ export function BookingFlow() {
     setSelectedServices([]);
     setMatchedOffer(null);
     setShowDealNotice(false);
-    setShowBookingOptions(true);
+    setBookingStarted(false);
+    setShowBookingOptions(initialPrompt === "channel");
+    setShowLocationOptions(false);
     setDate(null);
     setTime(null);
     setContactMethod(null);
@@ -474,10 +956,10 @@ export function BookingFlow() {
             <h2 id="booking-channel-title" className="mt-3 font-display text-2xl text-foreground">{language === "th" ? "ต้องการจองคิวผ่านช่องทางใด" : "How would you like to book?"}</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">{language === "th" ? "เลือกช่องทางติดต่อก่อน เราจะเตรียมรายละเอียดนัดหมายให้คุณ" : "Choose a contact channel first. Your appointment details will be prepared for you."}</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <button type="button" onClick={() => setContactMethod("whatsapp")} className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-3 text-xs font-bold uppercase tracking-[0.14em] text-primary-foreground">
+              <button type="button" onClick={() => { selectChannel("whatsapp"); setShowLocationOptions(true); }} className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-3 text-xs font-bold uppercase tracking-[0.14em] text-primary-foreground">
                 <MessageCircle className="size-4" /> WhatsApp
               </button>
-              <button type="button" onClick={() => setContactMethod("line")} className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/60 px-4 py-3 text-xs font-bold uppercase tracking-[0.14em] text-primary">
+              <button type="button" onClick={() => { selectChannel("line"); setShowLocationOptions(true); }} className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/60 px-4 py-3 text-xs font-bold uppercase tracking-[0.14em] text-primary">
                 <Send className="size-4" /> LINE
               </button>
             </div>
@@ -485,22 +967,22 @@ export function BookingFlow() {
         </div>
       )}
 
-      {showBookingOptions && contactMethod && !location && (
+      {showLocationOptions && !location && (
         <div className="fixed inset-0 z-[75] grid place-items-center bg-black/70 px-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="booking-location-title">
           <div className="relative w-full max-w-md border border-primary/45 bg-background p-6 text-center shadow-2xl sm:p-8">
-            <button type="button" onClick={() => { setShowBookingOptions(false); setContactMethod(null); setLocation(null); }} aria-label={language === "th" ? "ปิดหน้าต่าง" : "Close location options"} className="absolute right-4 top-4 z-10 grid size-9 place-items-center rounded-full border border-primary/60 bg-background text-primary transition-colors hover:bg-primary hover:text-primary-foreground">
+            <button type="button" onClick={() => setShowLocationOptions(false)} aria-label={language === "th" ? "ปิดหน้าต่าง" : "Close location options"} className="absolute right-4 top-4 z-10 grid size-9 place-items-center rounded-full border border-primary/60 bg-background text-primary transition-colors hover:bg-primary hover:text-primary-foreground">
               <X className="size-4" />
             </button>
             <MapPin className="mx-auto size-7 text-primary" />
             <h2 id="booking-location-title" className="mt-3 font-display text-2xl text-foreground">{language === "th" ? "เลือกสาขาที่ต้องการเข้าใช้บริการ" : "Choose your location"}</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">{language === "th" ? "ต้องการเข้าใช้บริการที่สาขาใด" : "Where would you like to visit for your appointment?"}</p>
             <div className="mt-6 grid gap-3">
-              <button type="button" onClick={() => setLocation("Khlong Toei · Sukhumvit — 33 Sukhumvit Rd, Bangkok 10110")} className="border border-border px-4 py-3 text-left text-sm text-foreground transition-colors hover:border-primary hover:text-primary">
+              <button type="button" onClick={() => { setLocation("Khlong Toei · Sukhumvit — 33 Sukhumvit Rd, Bangkok 10110"); setShowLocationOptions(false); }} className="border border-border px-4 py-3 text-left text-sm text-foreground transition-colors hover:border-primary hover:text-primary">
                 <span className="block text-xs font-bold uppercase tracking-[0.18em] text-primary">{language === "th" ? "สาขา 01" : "Location 01"}</span>
                 Khlong Toei · Sukhumvit
                 <span className="mt-1 block text-xs text-muted-foreground">33 Sukhumvit Rd, Bangkok 10110</span>
               </button>
-              <button type="button" onClick={() => setLocation("Phaya Thai · Phahon Yothin — 2/3 Phahon Yothin 7, Bangkok 10400")} className="border border-border px-4 py-3 text-left text-sm text-foreground transition-colors hover:border-primary hover:text-primary">
+              <button type="button" onClick={() => { setLocation("Phaya Thai · Phahon Yothin — 2/3 Phahon Yothin 7, Bangkok 10400"); setShowLocationOptions(false); }} className="border border-border px-4 py-3 text-left text-sm text-foreground transition-colors hover:border-primary hover:text-primary">
                 <span className="block text-xs font-bold uppercase tracking-[0.18em] text-primary">{language === "th" ? "สาขา 02" : "Location 02"}</span>
                 Phaya Thai · Phahon Yothin
                 <span className="mt-1 block text-xs text-muted-foreground">2/3 Phahon Yothin 7, Bangkok 10400</span>
@@ -810,9 +1292,9 @@ export function BookingFlow() {
               </label>
               <label className="block">
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
-                  {contactMethod === "line" ? "LINE ID" : t.whatsappNumber}
+                  {isLineChannel ? "LINE ID" : t.whatsappNumber}
                 </span>
-                {contactMethod === "line" ? (
+                {isLineChannel ? (
                   <input
                     value={lineId}
                     maxLength={80}
@@ -821,14 +1303,41 @@ export function BookingFlow() {
                     className="mt-2 w-full rounded-sm border border-input bg-background px-3 py-3 text-foreground outline-none transition-colors focus:border-primary"
                   />
                 ) : (
-                  <input
-                    value={phone}
-                    maxLength={24}
-                    inputMode="tel"
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+66 92 905 0509"
-                    className="mt-2 w-full rounded-sm border border-input bg-background px-3 py-3 text-foreground outline-none transition-colors focus:border-primary"
-                  />
+                  <div className="mt-2 flex items-center gap-2 rounded-sm border border-input bg-background px-2 py-2 focus-within:border-primary">
+                    <div className="relative min-w-[8rem] rounded-sm border border-border bg-background">
+                      <div className="flex items-center gap-2 px-2 py-2 text-sm font-medium text-foreground">
+                        <span className="text-lg leading-none">{selectedCountry.flag}</span>
+                        <span>{selectedCountry.code}</span>
+                        <svg viewBox="0 0 20 20" fill="none" className="ml-1 size-4 text-muted-foreground" aria-hidden="true">
+                          <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                      <select
+                        value={countryCode}
+                        onChange={(event) => {
+                          const nextCode = event.target.value;
+                          setCountryCode(nextCode);
+                          setPhone(nextCode);
+                        }}
+                        className="absolute inset-0 cursor-pointer appearance-none opacity-0"
+                        aria-label="Country code"
+                      >
+                        {COUNTRY_CODES.map(({ code, label }) => (
+                          <option key={code} value={code}>
+                            {label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <input
+                      value={phone}
+                      maxLength={getPhoneMaxLength(countryCode)}
+                      inputMode="tel"
+                      onChange={(e) => setPhone(formatPhoneValue(e.target.value, countryCode))}
+                      placeholder="92 905 0509"
+                      className="w-full border-0 bg-transparent px-1 py-2 text-foreground outline-none placeholder:text-muted-foreground"
+                    />
+                  </div>
                 )}
               </label>
               <label className="block sm:col-span-2">
@@ -863,7 +1372,7 @@ export function BookingFlow() {
                   [Clock, language === "th" ? "เวลา" : "Time", time ?? "—"],
                   [MapPin, language === "th" ? "สถานที่" : "Location", location ?? "—"],
                   [User, language === "th" ? "ชื่อ" : "Name", name.trim()],
-                  [contactMethod === "line" ? Send : MessageCircle, contactMethod === "line" ? "LINE ID" : channelLabel(contactMethod ?? "whatsapp"), contactMethod === "line" ? lineId.trim() : phone.trim()],
+                  [isLineChannel ? Send : MessageCircle, isLineChannel ? "LINE ID" : channelLabel(currentChannel), isLineChannel ? lineId.trim() : phone.trim()],
                   ];
                   if (note.trim()) {
                     summaryRows.push([FileText, language === "th" ? "คำขอ" : "Request", note.trim()]);
@@ -913,7 +1422,7 @@ export function BookingFlow() {
                 </>
               ) : (
                 <>
-                  {contactMethod === "line" ? <Send className="size-5" /> : <MessageCircle className="size-5" />} Confirm via {channelLabel(contactMethod ?? "whatsapp")}
+                  {isLineChannel ? <Send className="size-5" /> : <MessageCircle className="size-5" />} Confirm via {channelLabel(currentChannel)}
                 </>
               )}
             </button>
@@ -946,8 +1455,10 @@ const topics = [
 export function AskBarber() {
   const [topic, setTopic] = useState<string | null>(null);
   const [name, setName] = useState("");
+  const [countryCode, setCountryCode] = useState<string>(COUNTRY_CODES[0]!.code);
   const [phone, setPhone] = useState("");
   const [msg, setMsg] = useState("");
+  const selectedCountry = COUNTRY_CODES.find((item) => item.code === countryCode) ?? COUNTRY_CODES[0]!;
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
@@ -1061,14 +1572,41 @@ export function AskBarber() {
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
             WhatsApp number
           </span>
-          <input
-            value={phone}
-            maxLength={24}
-            inputMode="tel"
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="+66 92 905 0509"
-            className="mt-2 w-full rounded-sm border border-input bg-background px-3 py-3 text-foreground outline-none transition-colors focus:border-primary"
-          />
+          <div className="mt-2 flex items-center gap-2 rounded-sm border border-input bg-background px-2 py-2 focus-within:border-primary">
+            <div className="relative min-w-[8rem] rounded-sm border border-border bg-background">
+              <div className="flex items-center gap-2 px-2 py-2 text-sm font-medium text-foreground">
+                <span className="text-lg leading-none">{selectedCountry.flag}</span>
+                <span>{selectedCountry.code}</span>
+                <svg viewBox="0 0 20 20" fill="none" className="ml-1 size-4 text-muted-foreground" aria-hidden="true">
+                  <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <select
+                value={countryCode}
+                onChange={(event) => {
+                  const nextCode = event.target.value;
+                  setCountryCode(nextCode);
+                  setPhone(nextCode);
+                }}
+                className="absolute inset-0 cursor-pointer appearance-none opacity-0"
+                aria-label="Country code"
+              >
+                {COUNTRY_CODES.map(({ code, label }) => (
+                  <option key={code} value={code}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <input
+              value={phone}
+              maxLength={getPhoneMaxLength(countryCode)}
+              inputMode="tel"
+              onChange={(e) => setPhone(formatPhoneValue(e.target.value, countryCode))}
+              placeholder="92 905 0509"
+              className="w-full border-0 bg-transparent px-1 py-2 text-foreground outline-none placeholder:text-muted-foreground"
+            />
+          </div>
         </label>
         <label className="block sm:col-span-2">
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, ExternalLink, Instagram, MapPin, Phone, Play, Quote, Scissors, Star } from "lucide-react";
+import { ArrowRight, ExternalLink, Instagram, MapPin, Phone, Quote, Scissors, Star } from "lucide-react";
 import { ADDRESS, ADDRESS_TWO, MAPS_EMBED, MAPS_EMBED_TWO, MAPS_LINK, MAPS_LINK_TWO, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { ServicesExplorer } from "@/components/services-explorer";
 import { SpecialOffers } from "@/components/special-offers";
@@ -40,41 +40,6 @@ const reviews = [
   ["Exceptional! Decided to wash and dry my hair as my partner was cutting his and I had a lovely time. My hair turned out perfect. Such a good late night pick me up.", "Judith Louis", "Google review"],
 ] as const;
 
-const team = [
-  {
-    name: "Kropper",
-    role: "Founder · Master Barber",
-    years: "10+ years",
-    bio: "Precision cuts, classic grooming and the signature Bangkok Kropper experience.",
-    specialties: ["Haircut", "Beard", "Shave", "Styling"],
-    image: "/barbar1.png",
-  },
-  {
-    name: "Mali",
-    role: "Color Specialist",
-    years: "8+ years",
-    bio: "Personal color, restorative treatments and soft movement for every texture.",
-    specialties: ["Color", "Highlights", "Hair Spa", "Keratin"],
-    image: "/barbar2.png",
-  },
-  {
-    name: "Niran",
-    role: "Grooming Specialist",
-    years: "7+ years",
-    bio: "Straight-razor ritual, beard architecture and the calmest hot towel in Sukhumvit.",
-    specialties: ["Beard", "Razor", "Hot Towel", "Grooming"],
-    image: "/barbar3.png",
-  },
-  {
-    name: "Fong",
-    role: "Senior Barber",
-    years: "6+ years",
-    bio: "Thoughtful styling, clean fades and an easy chair-side experience for every guest.",
-    specialties: ["Fades", "Styling", "Beard", "Finish"],
-    image: "/barbar1.png",
-  },
-] as const;
-
 const galleryItems = [
   ["01", "Signature fade", "/1.PNG"], ["02", "Hot towel ritual", "/2.PNG"], ["04", "Shop details", "/4.png"], ["05", "Classic cut", "/5.png"],
   ["07", "Sharp finish", "/7.png"], ["08", "The chair", "/8.png"], ["09", "Razor work", "/9.png"], ["10", "Color session", "/10.png"],
@@ -103,7 +68,6 @@ const galleryThaiLabels: Record<string, string> = {
   "Ready chair": "เก้าอี้พร้อมบริการ",
 };
 
-const videoThaiTitles = ["เฟดซิกเนเจอร์", "พิธีผ้าร้อน", "รีเซ็ตด้วยเฮดสปา"];
 const reviewThai = [
   "ประสบการณ์ยอดเยี่ยม ช่างใส่ใจในทุกรายละเอียด เฟดสวยมาก โกนขอบอย่างประณีต และมีผ้าร้อนให้บริการ ประทับใจมากและแนะนำอย่างยิ่ง",
   "หนึ่งในประสบการณ์ที่ดีที่สุดที่เคยได้รับในร้านบาร์เบอร์ ช่างใส่ใจรายละเอียดและให้บริการอย่างนุ่มนวล แนะนำอย่างมาก",
@@ -111,18 +75,6 @@ const reviewThai = [
   "ตัดผมและแต่งหนวดที่นี่แล้วพอใจมาก ช่างละเอียดและบริการราบรื่น แนะนำเป็นอย่างยิ่ง",
   "บริการยอดเยี่ยม ผมออกมาสวยและได้รับการดูแลอย่างดี เป็นประสบการณ์ที่ผ่อนคลายมาก",
 ];
-
-const teamThai: Record<string, { role: string; bio: string; specialties: string[] }> = {
-  Kropper: { role: "ผู้ก่อตั้ง · ช่างตัดผมมืออาชีพ", bio: "ตัดผมแม่นยำ ดูแลแบบคลาสสิก และสร้างประสบการณ์ Bangkok Kropper อันเป็นเอกลักษณ์", specialties: ["ตัดผม", "หนวดเครา", "โกน", "จัดแต่งทรง"] },
-  Mali: { role: "ผู้เชี่ยวชาญด้านสีผม", bio: "ออกแบบสีผม ทรีตเมนต์ฟื้นบำรุง และสร้างทรงที่เหมาะกับทุกสภาพเส้นผม", specialties: ["ทำสี", "ไฮไลต์", "แฮร์สปา", "เคราติน"] },
-  Niran: { role: "ผู้เชี่ยวชาญด้านกรูมมิ่ง", bio: "โกนด้วยมีดโกน แต่งทรงหนวดเครา และดูแลด้วยผ้าร้อนอย่างผ่อนคลายในย่านสุขุมวิท", specialties: ["หนวดเครา", "มีดโกน", "ผ้าร้อน", "กรูมมิ่ง"] },
-  Fong: { role: "ช่างตัดผมอาวุโส", bio: "จัดแต่งทรงอย่างพิถีพิถัน เฟดคมสะอาด และดูแลลูกค้าทุกคนอย่างเป็นกันเอง", specialties: ["เฟด", "จัดแต่งทรง", "หนวดเครา", "เก็บรายละเอียด"] },
-};
-
-function localizedTeamMember(member: (typeof team)[number], language: "en" | "th") {
-  const thai = teamThai[member.name];
-  return language === "th" && thai ? { ...member, ...thai } : member;
-}
 
 const faqThai = [
     ["ร้าน Bangkok Kropper Barber Shop อยู่ที่ไหน", "Bangkok Kropper Barber Shop มี 2 สาขา: 33 ถนนสุขุมวิท คลองเตย กรุงเทพฯ 10110 และ 2/3 พหลโยธิน 7 พญาไท กรุงเทพฯ 10400 ประเทศไทย"],
@@ -156,7 +108,6 @@ const faqs = [
 
 function Home() {
   const [activeReview, setActiveReview] = useState(0);
-  const [activeTeam, setActiveTeam] = useState<number | null>(null);
   const [activeGallery, setActiveGallery] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [galleryVisible, setGalleryVisible] = useState(false);
@@ -164,10 +115,7 @@ function Home() {
   const galleryPointerStart = useRef<number | null>(null);
   const [galleryDrag, setGalleryDrag] = useState(0);
   const [locationsVisible, setLocationsVisible] = useState(false);
-  const [activeVideo, setActiveVideo] = useState(0);
   const { language, t } = useI18n();
-  const activeMember = activeTeam === null ? null : localizedTeamMember(team[activeTeam]!, language);
-  const localizedTeam = team.map((member) => localizedTeamMember(member, language));
   useEffect(() => {
     const timer = window.setInterval(() => {
       setActiveReview((current) => (current + 1) % reviews.length);
@@ -228,48 +176,20 @@ function Home() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveVideo((current) => (current + 1) % 3);
-    }, 4200);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveTeam((current) => current === null ? 0 : (current + 1) % team.length);
-    }, 8000);
-    return () => window.clearInterval(timer);
-  }, []);
-
   return (
     <div className="min-h-screen bg-background font-sans">
       <SiteHeader />
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden border-b border-border bg-background">
-        <img
-          src="/hero.png"
-          alt="Bangkok Kropper Barber Shop storefront"
-          width={606}
-          height={891}
-          className="hero-right-image absolute right-0 top-0 h-full w-full object-cover opacity-80 transition-transform duration-700 ease-out md:w-[54%]"
-          style={{ transform: "scale(1.04)" }}
-        />
-        <div
-          className="pointer-events-none absolute inset-0 transition-[background] duration-300"
-          style={{
-            background: "radial-gradient(circle at 50% 42%, color-mix(in oklab, var(--color-accent) 13%, transparent), transparent 26%), linear-gradient(to bottom, color-mix(in oklab, var(--color-background) 82%, transparent), color-mix(in oklab, var(--color-background) 72%, transparent) 52%, var(--color-background) 100%)",
-          }}
-        />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,transparent_20%,rgba(255,255,255,0.12)_50%,transparent_80%)] opacity-40" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_40%,color-mix(in_oklab,var(--color-accent)_10%,transparent),transparent_32%)]" />
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <Scissors className="hero-float absolute left-[8%] top-[28%] size-8 rotate-[-24deg] text-primary/20 md:size-11" />
           <Scissors className="hero-float absolute right-[10%] top-[22%] size-6 rotate-[58deg] text-accent/20 md:size-9" style={{ animationDelay: "-3s" }} />
           <span className="hero-float absolute bottom-[25%] right-[19%] h-px w-16 rotate-[-28deg] bg-primary/15 md:w-24" style={{ animationDelay: "-1.5s" }} />
         </div>
-        <div className="relative mx-auto flex min-h-[92vh] max-w-7xl flex-col justify-center px-5 pt-14 pb-16 sm:pt-20">
-          <div>
+        <div className="relative mx-auto grid min-h-[82vh] max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14 lg:py-20">
+          <div className="relative z-10">
             <span className="inline-flex w-fit items-center gap-2 rounded-sm border border-primary/50 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.3em] text-primary">
               <Star className="size-3 fill-primary" /> 4.9★ · 667 Google reviews
             </span>
@@ -308,6 +228,19 @@ function Home() {
                 <ArrowRight className="size-3.5" /> {t.specialDeals}
               </a>
             </div>
+          </div>
+          <div className="relative min-h-[24rem] overflow-hidden border border-border md:min-h-[34rem]">
+            <img
+              src="/hero.png"
+              alt="Bangkok Kropper Barber Shop storefront"
+              width={606}
+              height={891}
+              className="size-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/75 via-transparent to-transparent" />
+            <span className="absolute bottom-5 left-5 border-l-2 border-primary bg-background/75 px-4 py-3 text-xs font-bold uppercase tracking-[0.18em] backdrop-blur-sm">
+              Bangkok Kropper · Est. 2024
+            </span>
           </div>
         </div>
       </section>
@@ -383,38 +316,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Video / motion */}
-      <section id="media" className="border-b border-border bg-background px-5 py-20">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-            <div>
-              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.35em] text-accent">
-                <Play className="size-3.5 fill-current" /> {t.videoMotion}
-              </p>
-              <h2 className="mt-3 font-display text-xl uppercase tracking-wide text-foreground md:text-3xl">
-                {t.watchRhythm}
-              </h2>
-            </div>
-            <p className="max-w-sm text-sm text-muted-foreground">{t.heroDescription}</p>
-          </div>
-          <div className="mt-8 grid gap-3 lg:grid-cols-[1.4fr_0.8fr_0.8fr]">
-            {["Signature fade", "Hot towel ritual", "Head spa reset"].map((title, index) => <div key={title} className={`video-card group relative flex min-h-[16rem] flex-col justify-between overflow-hidden border border-dashed transition-all duration-1000 ease-out ${index === activeVideo ? "border-primary bg-primary/10 shadow-[0_0_35px_-14px_var(--color-primary)] lg:min-h-[25rem]" : "border-border bg-card/40"}`}>
-              {index === 1 ? (
-                <video autoPlay muted loop playsInline aria-label="Bangkok Kropper barber video" className="video-card-media absolute inset-0 size-full object-cover opacity-35">
-                  <source src="/video2.mp4" type="video/mp4" />
-                </video>
-              ) : (
-                <img src="/video1.gif" alt="Bangkok Kropper barber chair in motion" className="video-card-media absolute inset-0 size-full object-cover opacity-35" />
-              )}
-              <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(135deg,color-mix(in_oklab,var(--color-primary)_12%,transparent)_1px,transparent_1px)] [background-size:22px_22px]" />
-              <div className="relative flex items-start justify-between p-5"><span className="text-xs font-bold uppercase tracking-[0.25em] text-primary">0{index + 1} / {t.videoSlot}</span><span className="border border-primary/40 px-2 py-1 text-[0.6rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">{index === activeVideo ? t.inFocus : t.comingSoon}</span></div>
-              <div className="relative flex flex-col items-center justify-center px-5 py-8 text-center"><span className={`grid size-16 place-items-center rounded-full border border-primary/60 text-primary transition-all duration-500 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground ${index === activeVideo ? "animate-pulse bg-primary text-primary-foreground" : ""}`}><Play className="ml-1 size-6 fill-current" /></span><h3 className="mt-6 font-display text-2xl uppercase text-foreground">{language === "th" ? videoThaiTitles[index] : title}</h3><p className="mt-2 max-w-xs text-sm text-muted-foreground">{t.videoPlaceholder}</p></div>
-              <div className="relative flex items-center justify-between border-t border-border px-5 py-4 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground"><span>{t.mp4Reel}</span><ArrowRight className="size-4 text-primary transition-transform group-hover:translate-x-1" /></div>
-            </div>)}
-          </div>
-        </div>
-      </section>
-
       {/* Locations */}
       <section id="locations" className={`locations-section border-b border-border bg-card/20 px-5 py-12 ${locationsVisible ? "locations-visible" : ""}`}>
         <div className="mx-auto max-w-7xl">
@@ -470,18 +371,14 @@ function Home() {
             </div>
           </div>
 
-          <div className="team-roster mt-8 grid gap-4 sm:grid-cols-2" aria-label="Our team">
-            {localizedTeam.map((member, index) => (
-              <article key={member.name} className="team-roster-card group grid grid-cols-[8rem_1fr] overflow-hidden border border-border bg-background/80 sm:grid-cols-[10rem_1fr]">
-                <button type="button" onClick={() => setActiveTeam(index)} aria-label={`View ${member.name}'s profile`} className="team-roster-image relative overflow-hidden text-left">
-                  <img src={member.image} alt={`${member.name} at Bangkok Kropper Barber Shop`} width={240} height={280} className="size-full object-cover" />
-                  <span className="absolute bottom-2 left-2 font-display text-xl text-primary">0{index + 1}</span>
-                </button>
-                <div className="min-w-0 p-4">
-                  <p className="text-[0.55rem] font-bold uppercase tracking-[0.25em] text-primary">{member.role}</p>
-                  <h3 className="mt-2 text-xl leading-none text-foreground">{member.name}</h3>
-                  <p className="mt-3 line-clamp-3 text-xs leading-5 text-muted-foreground">{member.bio}</p>
-                  <div className="mt-4 flex flex-wrap gap-1.5">{member.specialties.slice(0, 3).map((specialty) => <span key={specialty} className="border border-border px-2 py-1 text-[0.5rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">{specialty}</span>)}</div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-4" aria-label="Our team">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <article key={index} className="overflow-hidden border border-border bg-background/80">
+                <div className="flex h-44 items-center justify-center border-b border-border bg-gradient-to-br from-primary/10 to-background">
+                  <div className="h-20 w-20 rounded-full border border-dashed border-primary/60 bg-background/70" aria-hidden="true" />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl leading-none text-primary/80">Name</h3>
                 </div>
               </article>
             ))}

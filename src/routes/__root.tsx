@@ -7,8 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
-import { Scissors } from "lucide-react";
+import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -128,51 +127,12 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const [showSplash, setShowSplash] = useState(true);
-  const [isLeaving, setIsLeaving] = useState(false);
-
-  useEffect(() => {
-    const leaveSplash = () => {
-      setIsLeaving(true);
-      window.setTimeout(() => setShowSplash(false), 850);
-    };
-
-    const timer = window.setTimeout(leaveSplash, 2150);
-    return () => window.clearTimeout(timer);
-  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
-        {showSplash && (
-          <div className={`welcome-splash ${isLeaving ? "welcome-splash--leaving" : ""}`} role="status" aria-label="Welcome to Bangkok Kropper">
-            <div className="welcome-splash__backdrop" />
-            <div className="welcome-splash__texture" />
-            <div className="welcome-splash__wash" />
-            <div className="welcome-splash__beam" aria-hidden="true" />
-            <div className="welcome-splash__line" aria-hidden="true" />
-            <div className="welcome-splash__glitter" aria-hidden="true">
-              <i /><i /><i /><i /><i /><i /><i /><i /><i /><i />
-            </div>
-            <div className="welcome-splash__logo-stage" aria-hidden="true">
-              <span className="welcome-splash__logo-ring" />
-              <img src="/logo.png" alt="" />
-            </div>
-            <div className="welcome-splash__scissors" aria-hidden="true">
-              <Scissors />
-            </div>
-            <div className="welcome-splash__content">
-              <div className="welcome-splash__mark">
-                <span className="welcome-splash__monogram" aria-label="BK">BK</span>
-              </div>
-              <p className="welcome-splash__name">Bangkok Kropper</p>
-              <div className="welcome-splash__rule" aria-hidden="true"><span /><span /></div>
-            </div>
-            <div className="welcome-splash__progress" aria-hidden="true"><span /></div>
-          </div>
-        )}
       </I18nProvider>
     </QueryClientProvider>
   );

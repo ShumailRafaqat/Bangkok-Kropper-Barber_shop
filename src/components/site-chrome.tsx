@@ -473,7 +473,7 @@ export function SiteFooter() {
                     <span className="block text-xs font-bold uppercase tracking-[0.2em] text-primary">
                       {t.liveGoogleReviews}
                     </span>
-                    <span className="mt-1 block text-xs text-muted-foreground">4.9★ · 665 {t.reviews.toLowerCase()}</span>
+                    <span className="mt-1 block text-xs text-muted-foreground">4.9★ · 667 {t.reviews.toLowerCase()}</span>
                   </span>
                 </span>
                 <ExternalLink className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -500,7 +500,7 @@ export function SiteFooter() {
       </div>
 
       <p className="relative border-t border-border px-7 py-5 text-center text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          © {new Date().getFullYear()} Bangkok Kropper Co., Ltd. · 4.9★ · 665 {t.reviews.toLowerCase()}
+          © {new Date().getFullYear()} Bangkok Kropper Co., Ltd. · 4.9★ · 667 {t.reviews.toLowerCase()}
       </p>
     </footer>
   );

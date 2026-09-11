@@ -23,7 +23,7 @@ export const specialOffers: SpecialOffer[] = [
     audience: "men",
     name: "Fresh Gentleman",
     items: [
-      { serviceId: "haircut-shampoo", name: "Hair Cut + Shampoo", price: 700 },
+      { serviceId: "haircut-shampoo", name: "Haircut + Shampoo", price: 700 },
       { serviceId: "shave-trim-beard", name: "Shave + Trim + Beard", price: 400 },
     ],
     originalTotal: 1100,
@@ -61,7 +61,7 @@ export const specialOffers: SpecialOffer[] = [
     audience: "women",
     name: "Hair Refresh",
     items: [
-      { serviceId: "women-hair-cut", name: "Women Hair Cut", price: 690 },
+      { serviceId: "women-hair-cut", name: "Women's Haircut", price: 690 },
       { serviceId: "shampoo-blow-dry", name: "Shampoo + Blow Dry", price: 450 },
     ],
     originalTotal: 1140,

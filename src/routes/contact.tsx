@@ -11,7 +11,7 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Book a chair at Bangkok Kropper Barber Shop in Khlong Toei, Bangkok. Call +66 92 905 0509. Open daily, rated 4.9★ from 665 reviews.",
+          "Book a chair at Bangkok Kropper Barber Shop in Khlong Toei, Bangkok. Call +66 92 905 0509. Open daily, rated 4.9★ from 667 reviews.",
       },
       { property: "og:title", content: "Visit & Book | Bangkok Kropper Barber Shop" },
       {
@@ -181,7 +181,7 @@ function ContactPage() {
                 <span className="block text-xs uppercase tracking-[0.2em] text-muted-foreground">
                   Google rating
                 </span>
-                <span className="font-display text-xl text-primary">4.9★ · 665 reviews</span>
+                <span className="font-display text-xl text-primary">4.9★ · 667 reviews</span>
               </span>
             </div>
           </div>

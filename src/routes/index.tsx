@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Bangkok Kropper | Best Barber Shop in Bangkok" },
       {
         property: "og:description",
-        content: "Signature fades, royal razor shaves and herbal head spa. 4.9★, 665 reviews.",
+        content: "Signature fades, royal razor shaves and herbal head spa. 4.9★, 667 reviews.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -137,16 +137,21 @@ const faqThai = [
     ["จะเดินทางไป Bangkok Kropper Barber Shop ได้อย่างไร", "เราอยู่ที่ 33 ถนนสุขุมวิท คลองเตย กรุงเทพฯ 10110 และสามารถค้นหาสถานที่ผ่าน Google Maps ได้"],
   ] as const;
 const faqs = [
-  ["Where is Bangkok Kropper Barber Shop located?", "Bangkok Kropper Barber Shop has two Bangkok locations: 33 Sukhumvit Rd, Khlong Toei, Bangkok 10110, and 2/3 Phahon Yothin 7, Phaya Thai, Bangkok 10400, Thailand."],
-  ["Is there a barber shop near Sukhumvit in Bangkok?", "Yes. Bangkok Kropper Barber Shop provides professional men's grooming and hair services on Sukhumvit Road, Khlong Toei, Bangkok."],
-  ["What services does Bangkok Kropper Barber Shop offer?", "We offer a wide range of grooming and hair services, including men's haircuts, beard trimming, shaving, shampoo, hair coloring, hair treatments, facial massage, waxing, women's hair services, and kids' haircuts."],
-  ["Does Bangkok Kropper Barber Shop offer men's haircuts?", "Yes. We provide men's haircuts, haircut and shampoo, beard trimming, shaving, hair styling, hair coloring, hair treatments, and grooming services."],
-  ["Do you offer beard trimming and shaving in Bangkok?", "Yes. Our men's grooming services include beard trimming, beard grooming, and shaving."],
-  ["Does Bangkok Kropper Barber Shop offer women's hair services?", "Yes. We also provide women's haircuts, shampoo and blow-dry, hair spa, hair coloring, highlights, keratin treatments, Brazilian keratin, perms, and permanent hair straightening."],
-  ["Do you offer hair coloring in Bangkok?", "Yes. We offer hair coloring for men and women, including regular hair colors, fashion colors, and highlights. The final price may vary depending on hair length and the service required."],
-  ["Does Bangkok Kropper Barber Shop offer kids' haircuts?", "Yes. Kids' haircuts are available along with our men's and women's hair services."],
-  ["Can I book a haircut at Bangkok Kropper Barber Shop through WhatsApp?", "Yes. You can contact us on WhatsApp at +66 92 905 0509 to ask about appointments, services, availability, and pricing."],
-  ["How can I find Bangkok Kropper Barber Shop?", "You can find Bangkok Kropper Barber Shop at either of our two locations: 33 Sukhumvit Rd, Khlong Toei, Bangkok 10110, or 2/3 Phahon Yothin 7, Phaya Thai, Bangkok 10400, Thailand. Both locations can be found using Google Maps."],
+  ["Where is your barber shop located in Bangkok?", "Bangkok Kropper Barber Shop has two Bangkok locations: 33 Sukhumvit Rd, Khlong Toei, Bangkok 10110, and 2/3 Phahon Yothin 7, Phaya Thai, Bangkok 10400, Thailand. You can also find maps and directions in our Locations section."],
+  ["Is your barber shop near Nana BTS or Asok BTS?", "Yes. Our Sukhumvit location is conveniently located near Nana BTS, making it easy to reach by public transportation."],
+  ["What are your opening hours?", "We’re open from 9:00 AM to 5:00 AM, which means we’re open 20 hours a day for your convenience."],
+  ["Do I need an appointment, or do you accept walk-ins?", "Both! We welcome appointments and walk-ins, so you can visit us whichever way is more convenient for you."],
+  ["Do you provide haircuts for men, women, and kids?", "Yes. We provide haircuts for men, women, and kids, along with a variety of other grooming and hair services."],
+  ["Do your barbers speak English?", "Yes. We have barbers who can assist you in English, making it easy to communicate exactly what haircut or style you want."],
+  ["Do you provide skin fades, taper fades, and classic haircuts?", "Absolutely. Skin fades, taper fades, and classic haircuts are some of our specialties."],
+  ["Can your barber recommend a hairstyle suitable for my face shape?", "Yes. Our experienced barbers can recommend a hairstyle based on your face shape, hair type, and personal style."],
+  ["Can I show the barber a photo of the haircut I want?", "Of course! Feel free to show us a reference photo. Our barbers will work to deliver a haircut that matches your expectations as closely as possible."],
+  ["Do you offer hair washing and styling with a haircut?", "Yes. You can choose a haircut with shampoo, along with other available grooming and styling services."],
+  ["How much does a haircut cost in Bangkok?", "Our prices vary depending on the service you choose. You can find the current prices for haircuts and all other services in our Services section."],
+  ["What payment methods do you accept?", "We accept cash, card payments, and PromptPay."],
+  ["Is parking available near the barber shop?", "Yes, parking is available near the barber shop."],
+  ["What happens if I arrive late for my appointment?", "No problem. We understand that delays can happen, and we’ll do our best to accommodate you at the earliest available time."],
+  ["Why should I choose your barber shop in Bangkok?", "Our founder brings over 18 years of experience to the business, and customer satisfaction has always been one of our top priorities. We’re proud to be a highly reviewed barber shop in Bangkok, trusted and recommended by many of our customers."],
 ] as const;
 
 function Home() {
@@ -266,7 +271,7 @@ function Home() {
         <div className="relative mx-auto flex min-h-[92vh] max-w-7xl flex-col justify-center px-5 pt-14 pb-16 sm:pt-20">
           <div>
             <span className="inline-flex w-fit items-center gap-2 rounded-sm border border-primary/50 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.3em] text-primary">
-              <Star className="size-3 fill-primary" /> 4.9★ · 665 Google reviews
+              <Star className="size-3 fill-primary" /> 4.9★ · 667 Google reviews
             </span>
 
             <h1
@@ -499,6 +504,10 @@ function Home() {
                 {t.lovedByCustomers}
               </h2>
             </div>
+            <div className="flex items-baseline gap-2 border-l border-primary/50 pl-4 md:pb-1">
+              <span className="font-display text-3xl leading-none text-primary">667</span>
+              <span className="text-[0.58rem] font-bold uppercase tracking-[0.2em] text-muted-foreground">Google reviews</span>
+            </div>
           </div>
 
           <div className="relative mx-auto h-[34rem] w-full max-w-3xl overflow-hidden rounded-lg border border-border bg-background p-4 shadow-[0_20px_50px_-35px_rgba(0,0,0,0.45)] sm:h-[28rem] md:h-[25rem] md:p-5">
@@ -514,6 +523,7 @@ function Home() {
                 <div>
                   <span className="font-display text-xl text-foreground">4.9</span>
                   <div className="mt-1 flex gap-0.5 text-primary" aria-label="4.9 out of 5 stars">{[1, 2, 3, 4, 5].map((star) => <Star key={star} className="size-3.5 fill-primary" />)}</div>
+                  <p className="mt-2 text-[0.6rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">667 reviews</p>
                 </div>
               </div>
 

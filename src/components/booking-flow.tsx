@@ -41,7 +41,7 @@ type Svc = {
 const bookableServices: Svc[] = [
   {
     id: "haircut-shampoo",
-    name: "Hair Cut + Shampoo",
+    name: "Haircut + Shampoo",
     price: 700,
     minutes: 60,
     desc: "A complete cut, wash and finishing service.",
@@ -65,7 +65,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "kids-hair-cut",
-    name: "Hair Cut Kids",
+    name: "Kids' Haircut",
     price: 500,
     minutes: 25,
     desc: "Patient cuts for ages 3–12, booster seat included.",
@@ -145,7 +145,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "women-hair-cut",
-    name: "Women Hair Cut",
+    name: "Women's Haircut",
     price: 690,
     minutes: 60,
     desc: "A considered cut shaped around your texture and everyday style.",
@@ -161,7 +161,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "hair-color-women",
-    name: "Hair Color Women",
+    name: "Women's Hair Color",
     price: 2000,
     minutes: 120,
     desc: "Women’s hair color starting from 2,000 THB; final price varies.",
@@ -193,7 +193,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "color-highlight",
-    name: "Color Highlight",
+    name: "Hair Highlights / Color Highlights",
     price: 2500,
     minutes: 150,
     desc: "Dimensional highlights starting from 2,500 THB.",
@@ -201,7 +201,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "keratin-hair-treatment",
-    name: "Hair Treatment Keratin",
+    name: "Keratin Hair Treatment",
     price: 500,
     minutes: 90,
     desc: "Keratin treatment starting from 500 THB.",

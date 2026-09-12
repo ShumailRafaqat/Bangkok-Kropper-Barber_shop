@@ -4,9 +4,8 @@ import { ArrowRight, ExternalLink, Instagram, MapPin, Phone, Quote, Scissors, St
 import { ADDRESS, ADDRESS_TWO, MAPS_EMBED, MAPS_EMBED_TWO, MAPS_LINK, MAPS_LINK_TWO, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { ServicesExplorer } from "@/components/services-explorer";
 import { SpecialOffers } from "@/components/special-offers";
+import { ComingSoonSection } from "@/components/coming-soon-section";
 import { useI18n } from "@/lib/i18n";
-import heroShop from "@/assets/hero-shop.jpg";
-import barberWork from "@/assets/barber-work.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -188,8 +187,8 @@ function Home() {
           <Scissors className="hero-float absolute right-[10%] top-[22%] size-6 rotate-[58deg] text-accent/20 md:size-9" style={{ animationDelay: "-3s" }} />
           <span className="hero-float absolute bottom-[25%] right-[19%] h-px w-16 rotate-[-28deg] bg-primary/15 md:w-24" style={{ animationDelay: "-1.5s" }} />
         </div>
-        <div className="relative mx-auto grid min-h-[82vh] max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14 lg:py-20">
-          <div className="relative z-10">
+        <div className="relative mx-auto grid min-h-[92vh] max-w-7xl items-center gap-10 px-5 py-16 lg:py-20">
+          <div className="relative z-10 max-w-3xl text-left">
             <span className="inline-flex w-fit items-center gap-2 rounded-sm border border-primary/50 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.3em] text-primary">
               <Star className="size-3 fill-primary" /> 4.9★ · 667 Google reviews
             </span>
@@ -228,19 +227,6 @@ function Home() {
                 <ArrowRight className="size-3.5" /> {t.specialDeals}
               </a>
             </div>
-          </div>
-          <div className="relative min-h-[24rem] overflow-hidden border border-border md:min-h-[34rem]">
-            <img
-              src="/hero.png"
-              alt="Bangkok Kropper Barber Shop storefront"
-              width={606}
-              height={891}
-              className="size-full object-cover transition-transform duration-700 hover:scale-[1.03]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/75 via-transparent to-transparent" />
-            <span className="absolute bottom-5 left-5 border-l-2 border-primary bg-background/75 px-4 py-3 text-xs font-bold uppercase tracking-[0.18em] backdrop-blur-sm">
-              Bangkok Kropper · Est. 2024
-            </span>
           </div>
         </div>
       </section>
@@ -359,33 +345,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Team */}
-      <section id="team" className="team-section relative overflow-hidden border-y border-border bg-secondary/35 px-5 py-12 text-foreground">
-        <div className="pointer-events-none absolute -right-24 top-16 size-72 rounded-full border border-primary/25" />
-        <div className="pointer-events-none absolute -left-28 bottom-10 size-80 rounded-full border border-primary/15" />
-        <div className="mx-auto max-w-7xl">
-          <div className="team-heading flex flex-col justify-between gap-4 md:flex-row md:items-end">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">{t.peopleBehindChair}</p>
-              <h2 className="mt-3 font-display text-xl uppercase tracking-wide text-foreground md:text-3xl">{t.handsBehindCraft}</h2>
-            </div>
-          </div>
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-4" aria-label="Our team">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <article key={index} className="overflow-hidden border border-border bg-background/80">
-                <div className="flex h-44 items-center justify-center border-b border-border bg-gradient-to-br from-primary/10 to-background">
-                  <div className="h-20 w-20 rounded-full border border-dashed border-primary/60 bg-background/70" aria-hidden="true" />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl leading-none text-primary/80">Name</h3>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Google reviews */}
       <section id="reviews" className="reviews-section relative overflow-hidden border-y border-border bg-card/30 px-5 py-8 md:py-10">
         <div className="pointer-events-none absolute -left-16 top-8 size-72 rounded-full border border-primary/10" />
@@ -474,6 +433,8 @@ function Home() {
           </div>
         </div>
       </section>
+
+      <ComingSoonSection />
 
       {/* SEO FAQ */}
       <section id="faq" className="border-y border-border bg-secondary/35 px-5 py-20">

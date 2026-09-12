@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { I18nProvider } from "../lib/i18n";
+import SplashScreen from "../components/splash-screen";
 
 function NotFoundComponent() {
   return (
@@ -79,10 +80,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Kis Fl H | Modern Barber Shop in Bangkok" },
-      { name: "description", content: "Kis Fl H offers precision haircuts, beard trims, styling, and premium grooming in Bangkok for a sharp, modern look." },
+      {
+        name: "description",
+        content:
+          "Kis Fl H offers precision haircuts, beard trims, styling, and premium grooming in Bangkok for a sharp, modern look.",
+      },
       { name: "author", content: "Kis Fl H" },
       { property: "og:title", content: "Kis Fl H | Modern Barber Shop in Bangkok" },
-      { property: "og:description", content: "Precision haircuts, beard trims, styling, and premium grooming in Bangkok." },
+      {
+        property: "og:description",
+        content: "Precision haircuts, beard trims, styling, and premium grooming in Bangkok.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
@@ -131,6 +139,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
+        <SplashScreen />
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </I18nProvider>

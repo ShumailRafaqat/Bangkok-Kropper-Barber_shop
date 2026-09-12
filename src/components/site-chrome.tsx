@@ -60,7 +60,7 @@ export function SiteHeader() {
       return;
     }
 
-    const sectionIds = ["services", "gallery", "locations", "team", "reviews", "faq"];
+    const sectionIds = ["services", "gallery", "locations", "reviews", "faq"];
     let frame = 0;
 
     const updateFromScroll = () => {
@@ -134,12 +134,6 @@ export function SiteHeader() {
             FAQ
           </a>
           <a
-            href="/#team"
-            className={`whitespace-nowrap text-[0.61rem] font-semibold uppercase tracking-[0.12em] transition-colors hover:text-primary xl:text-[0.64rem] ${activeSection === "team" ? "border-b border-primary pb-1 text-primary" : "text-muted-foreground"}`}
-          >
-            {t.team}
-          </a>
-          <a
             href="/#gallery"
             onClick={() => window.dispatchEvent(new Event("bk-gallery-animate"))}
             className={`whitespace-nowrap text-[0.61rem] font-semibold uppercase tracking-[0.12em] transition-colors hover:text-primary xl:text-[0.64rem] ${activeSection === "gallery" ? "border-b border-primary pb-1 text-primary" : "text-muted-foreground"}`}
@@ -203,13 +197,6 @@ export function SiteHeader() {
             className="block border-b border-border py-3 font-display text-xl tracking-wide text-foreground"
           >
             FAQ
-          </a>
-          <a
-            href="/#team"
-            onClick={() => setOpen(false)}
-            className="block border-b border-border py-3 font-display text-xl tracking-wide text-foreground"
-          >
-            {t.team}
           </a>
           <a
             href="/#gallery"

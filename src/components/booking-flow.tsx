@@ -44,7 +44,7 @@ type Svc = {
 const bookableServices: Svc[] = [
   {
     id: "haircut-shampoo",
-    name: "Haircut + Shampoo",
+    name: "Hair Cut + Shampoo + Spa + Set Hair",
     price: 700,
     minutes: 60,
     desc: "A complete cut, wash and finishing service.",
@@ -52,7 +52,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "shave-trim-beard",
-    name: "Shave + Trim + Beard",
+    name: "Shave + Trim + Beard + Hot and Cold Towels + Steam",
     price: 400,
     minutes: 40,
     desc: "Clean lines and a precise beard finish.",
@@ -60,7 +60,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "hair-trim-beard-shampoo",
-    name: "Hair + Trim + Beard + Shampoo",
+    name: "Hair + Trim + Beard + Shampoo + Serum + Head Massage + Set Hair",
     price: 1100,
     minutes: 90,
     desc: "The full chair ritual with cut, beard and shampoo.",
@@ -68,7 +68,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "kids-hair-cut",
-    name: "Kids' Haircut",
+    name: "Kids' Haircut + Shampoo + Serum + Head Massage + Set Hair",
     price: 500,
     minutes: 25,
     desc: "Patient cuts for ages 3–12, booster seat included.",
@@ -76,7 +76,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "shampoo-spa-set",
-    name: "Shampoo + Spa + Hair Styling + Head Massage",
+    name: "Shampoo + Spa Hair + Serum + Head Massage + Set Hair (For Men)",
     price: 390,
     minutes: 45,
     desc: "Wash, scalp care, styling and a relaxing head massage.",
@@ -84,7 +84,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "men-hair-color",
-    name: "Hair Color (Black/Brown)",
+    name: "Hair Color (Black/Brown) + Spa",
     price: 1200,
     minutes: 90,
     desc: "Natural black or brown color with a tailored consultation.",
@@ -92,7 +92,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "beard-color",
-    name: "Beard Color (Black/Brown)",
+    name: "Hair + Serum + Head Massage + Set Hair",
     price: 500,
     minutes: 45,
     desc: "Natural-looking beard color for an even, sharp finish.",
@@ -116,7 +116,7 @@ const bookableServices: Svc[] = [
   },
   {
     id: "wax-ears-nose",
-    name: "Wax (Ears / Nose)",
+    name: "Wax (Ears/Nose) + Antiseptic Serum",
     price: 200,
     minutes: 20,
     desc: "A precise grooming finish for ears and nose.",
@@ -244,8 +244,24 @@ const timeSlots = buildTimeSlots();
 const steps = ["Service", "Date", "Time", "Details", "Confirm"] as const;
 const serviceFilters = ["All", "Men", "Women", "Kids", "Grooming", "Treatments", "Color"] as const;
 
-function serviceCategory(id: string) {
-  if (["kids-hair-cut"].includes(id)) return "Kids";
+const menServiceIds = [
+  "haircut-shampoo",
+  "shave-trim-beard",
+  "hair-trim-beard-shampoo",
+  "shampoo-spa-set",
+  "men-hair-color",
+  "beard-color",
+  "fashion-color-men",
+  "men-treatment",
+  "wax-ears-nose",
+  "men-facial",
+  "manicure-hands",
+  "pedicure-feet",
+];
+
+function serviceCategories(id: string) {
+  let category: (typeof serviceFilters)[number];
+  if (["kids-hair-cut"].includes(id)) return ["Kids"];
   if (
     [
       "men-hair-color",
@@ -256,8 +272,8 @@ function serviceCategory(id: string) {
       "brazilian-keratin",
     ].includes(id)
   )
-    return "Color";
-  if (
+    category = "Color";
+  else if (
     [
       "women-hair-cut",
       "shampoo-blow-dry",
@@ -267,8 +283,8 @@ function serviceCategory(id: string) {
       "women-facial",
     ].includes(id)
   )
-    return "Women";
-  if (
+    category = "Women";
+  else if (
     [
       "shampoo-spa-set",
       "men-treatment",
@@ -279,8 +295,8 @@ function serviceCategory(id: string) {
       "brazilian-keratin",
     ].includes(id)
   )
-    return "Treatments";
-  if (
+    category = "Treatments";
+  else if (
     [
       "shave-trim-beard",
       "beard-color",
@@ -290,8 +306,14 @@ function serviceCategory(id: string) {
       "hair-trim-beard-shampoo",
     ].includes(id)
   )
-    return "Grooming";
-  return "Men";
+    category = "Grooming";
+  else category = "Men";
+
+  return menServiceIds.includes(id) && category !== "Men" ? ["Men", category] : [category];
+}
+
+function serviceCategory(id: string) {
+  return serviceCategories(id)[0]!;
 }
 
 function localizedCategory(id: string, language: "en" | "th") {
@@ -771,6 +793,18 @@ function formatPhoneValue(rawValue: string, code: string) {
   return groupPhoneDigits(digits, code);
 }
 
+function getPhonePlaceholder(code: string) {
+  const groups = COUNTRY_PHONE_GROUPS[code];
+  if (groups) {
+    return groups.map((size) => "x".repeat(size)).join(" ");
+  }
+
+  const limit = COUNTRY_PHONE_LIMITS[code] ?? 9;
+  return Array.from({ length: Math.ceil(limit / 3) }, (_, index) =>
+    "x".repeat(Math.min(3, limit - index * 3)),
+  ).join(" ");
+}
+
 type CountryCodePickerProps = {
   value: string;
   onChange: (code: string) => void;
@@ -927,11 +961,14 @@ export function BookingFlow({
   }, [language, selectedServices.length]);
 
   const visibleServices = bookableServices.filter((item) => {
-    const matchesFilter = serviceFilter === "All" || serviceCategory(item.id) === serviceFilter;
+    const matchesFilter =
+      serviceFilter === "All" || serviceCategories(item.id).includes(serviceFilter);
     const query = submittedServiceSearch.trim().toLowerCase();
     const matchesSearch =
       !query ||
-      `${item.name} ${item.desc} ${serviceCategory(item.id)}`.toLowerCase().includes(query);
+      `${item.name} ${item.desc} ${serviceCategories(item.id).join(" ")}`
+        .toLowerCase()
+        .includes(query);
     return matchesFilter && matchesSearch;
   });
 
@@ -982,32 +1019,42 @@ export function BookingFlow({
   };
 
   const message = () =>
-    [
-      "💈 NEW WEBSITE BOOKING",
-      "",
-      "Hello Bangkok Barber Shop! I'd like to request an appointment.",
-      "",
-      `👤 Name: ${name.trim()}`,
-      `📍 Location: ${location}`,
-      ...(contactMethod === "line"
-        ? [`🟢 LINE ID: ${lineId.trim()}`]
-        : [`📱 WhatsApp: ${countryCode} ${phone.trim()}`]),
-      `✂️ Services: ${(selectedServices.length ? selectedServices : service ? [service] : []).map((item) => item.name).join(", ")}`,
-      `📅 Date: ${date ? prettyDate(date, language) : ""}`,
-      `🕐 Time: ${time}`,
-      ...(matchedOffer
-        ? [
-            `🎁 Deal: ${matchedOffer.name}`,
-            `💰 Deal saving: ${matchedOffer.savings} THB`,
-            `✅ Deal total: ${matchedOffer.dealPrice} THB`,
-          ]
-        : []),
-      ...(note.trim() ? [`📝 Special Request: ${note.trim()}`] : []),
-      "",
-      "🌐 SOURCE: WEBSITE BOOKING",
-      "",
-      "Please confirm my appointment.",
-    ].join("\n");
+    (() => {
+      const bookingServices = selectedServices.length ? selectedServices : service ? [service] : [];
+      const originalTotal = bookingServices.reduce((sum, item) => sum + item.price, 0);
+      const discount = bookingServices.reduce((sum, item) => sum + Math.round(item.price * 0.5), 0);
+      const finalTotal = originalTotal - discount;
+
+      return [
+        "💈 NEW WEBSITE BOOKING",
+        "",
+        "Hello Bangkok Barber Shop! I'd like to request an appointment.",
+        "",
+        `👤 Name: ${name.trim()}`,
+        `📍 Location: ${location}`,
+        ...(contactMethod === "line"
+          ? [`🟢 LINE ID: ${lineId.trim()}`]
+          : [`📱 WhatsApp: ${countryCode} ${phone.trim()}`]),
+        `✂️ Services: ${bookingServices.map((item) => item.name).join(", ")}`,
+        `📅 Date: ${date ? prettyDate(date, language) : ""}`,
+        `🕐 Time: ${time}`,
+        "",
+        "Anniversary 50% OFF applied",
+        `Total: ${finalTotal.toLocaleString()} THB (was ${originalTotal.toLocaleString()} THB)`,
+        ...(matchedOffer
+          ? [
+              `🎁 Deal: ${matchedOffer.name}`,
+              `💰 Deal saving: ${matchedOffer.savings} THB`,
+              `✅ Deal total: ${matchedOffer.dealPrice} THB`,
+            ]
+          : []),
+        ...(note.trim() ? [`📝 Special Request: ${note.trim()}`] : []),
+        "",
+        "🌐 SOURCE: WEBSITE BOOKING",
+        "",
+        "Please confirm my appointment.",
+      ].join("\n");
+    })();
 
   const send = () => {
     setSending(true);
@@ -1579,7 +1626,7 @@ export function BookingFlow({
                       value={phone}
                       inputMode="tel"
                       onChange={(e) => setPhone(formatPhoneValue(e.target.value, countryCode))}
-                      placeholder="92 905 0509"
+                      placeholder={getPhonePlaceholder(countryCode)}
                       className="w-full border-0 bg-transparent px-1 py-2 text-foreground outline-none placeholder:text-muted-foreground"
                     />
                   </div>
@@ -1858,7 +1905,7 @@ export function AskBarber() {
               value={phone}
               inputMode="tel"
               onChange={(e) => setPhone(formatPhoneValue(e.target.value, countryCode))}
-              placeholder="92 905 0509"
+              placeholder={getPhonePlaceholder(countryCode)}
               className="w-full border-0 bg-transparent px-1 py-2 text-foreground outline-none placeholder:text-muted-foreground"
             />
           </div>

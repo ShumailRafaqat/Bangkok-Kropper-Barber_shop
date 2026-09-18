@@ -2,7 +2,6 @@ export type OfferAudience = "men" | "women";
 
 export type OfferItem = {
   serviceId: string;
-  
   name: string;
   price: number;
 };
@@ -23,8 +22,12 @@ export const specialOffers: SpecialOffer[] = [
     audience: "men",
     name: "Fresh Gentleman",
     items: [
-      { serviceId: "haircut-shampoo", name: "Haircut + Shampoo", price: 700 },
-      { serviceId: "shave-trim-beard", name: "Shave + Trim + Beard", price: 400 },
+      { serviceId: "haircut-shampoo", name: "Hair Cut + Shampoo + Spa + Set Hair", price: 700 },
+      {
+        serviceId: "shave-trim-beard",
+        name: "Shave + Trim + Beard + Hot and Cold Towels + Steam",
+        price: 400,
+      },
     ],
     originalTotal: 1100,
     dealPrice: 1000,
@@ -35,9 +38,13 @@ export const specialOffers: SpecialOffer[] = [
     audience: "men",
     name: "Complete Grooming",
     items: [
-      { serviceId: "hair-trim-beard-shampoo", name: "Hair + Trim + Beard + Shampoo", price: 1100 },
+      {
+        serviceId: "hair-trim-beard-shampoo",
+        name: "Hair + Trim + Beard + Shampoo + Serum + Head Massage + Set Hair",
+        price: 1100,
+      },
       { serviceId: "men-facial", name: "Facial Massage for Men", price: 690 },
-      { serviceId: "wax-ears-nose", name: "Wax (Ears/Nose)", price: 200 },
+      { serviceId: "wax-ears-nose", name: "Wax (Ears/Nose) + Antiseptic Serum", price: 200 },
     ],
     originalTotal: 1990,
     dealPrice: 1840,
@@ -48,7 +55,11 @@ export const specialOffers: SpecialOffer[] = [
     audience: "men",
     name: "Relax & Care",
     items: [
-      { serviceId: "shampoo-spa-set", name: "Shampoo + Spa + Hair Styling + Head Massage", price: 390 },
+      {
+        serviceId: "shampoo-spa-set",
+        name: "Shampoo + Spa Hair + Serum + Head Massage + Set Hair (For Men)",
+        price: 390,
+      },
       { serviceId: "men-treatment", name: "Hair Treatment + Spa + Vitamin (Men)", price: 600 },
       { serviceId: "manicure-hands", name: "Manicure - Hands", price: 350 },
     ],

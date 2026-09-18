@@ -33,7 +33,7 @@ type ServicesExplorerProps = {
 const menu: MenuService[] = [
   {
     id: "shave-trim-beard",
-    name: "Shave + Trim + Beard",
+    name: "Shave + Trim + Beard + Hot and Cold Towels + Steam",
     category: "grooming",
     price: 400,
     minutes: 40,
@@ -42,7 +42,7 @@ const menu: MenuService[] = [
   },
   {
     id: "haircut-shampoo",
-    name: "Haircut + Shampoo",
+    name: "Hair Cut + Shampoo + Spa + Set Hair",
     category: "men",
     price: 700,
     minutes: 60,
@@ -51,7 +51,7 @@ const menu: MenuService[] = [
   },
   {
     id: "hair-trim-beard-shampoo",
-    name: "Hair + Trim + Beard + Shampoo",
+    name: "Hair + Trim + Beard + Shampoo + Serum + Head Massage + Set Hair",
     category: "grooming",
     price: 1100,
     minutes: 90,
@@ -60,7 +60,7 @@ const menu: MenuService[] = [
   },
   {
     id: "kids-hair-cut",
-    name: "Kids' Haircut",
+    name: "Kids' Haircut + Shampoo + Serum + Head Massage + Set Hair",
     category: "kids",
     price: 500,
     minutes: 35,
@@ -69,7 +69,7 @@ const menu: MenuService[] = [
   },
   {
     id: "shampoo-spa-set",
-    name: "Shampoo + Spa + Hair Styling + Head Massage",
+    name: "Shampoo + Spa Hair + Serum + Head Massage + Set Hair (For Men)",
     category: "treatments",
     price: 390,
     minutes: 45,
@@ -78,7 +78,7 @@ const menu: MenuService[] = [
   },
   {
     id: "men-hair-color",
-    name: "Hair Color (Black / Brown)",
+    name: "Hair Color (Black/Brown) + Spa",
     category: "color",
     price: 1200,
     minutes: 90,
@@ -87,7 +87,7 @@ const menu: MenuService[] = [
   },
   {
     id: "beard-color",
-    name: "Beard Color (Black / Brown)",
+    name: "Hair + Serum + Head Massage + Set Hair",
     category: "grooming",
     price: 500,
     minutes: 45,
@@ -115,7 +115,7 @@ const menu: MenuService[] = [
   },
   {
     id: "wax-ears-nose",
-    name: "Wax (Ears / Nose)",
+    name: "Wax (Ears/Nose) + Antiseptic Serum",
     category: "grooming",
     price: 200,
     minutes: 20,
@@ -292,6 +292,18 @@ const categories: DisplayCategory[] = [
   },
 ];
 
+const menCatalogServiceIds = new Set([
+  "shampoo-spa-set",
+  "men-hair-color",
+  "beard-color",
+  "fashion-color-men",
+  "men-treatment",
+  "wax-ears-nose",
+  "men-facial",
+  "manicure-hands",
+  "pedicure-feet",
+]);
+
 export function ServicesExplorer({ initialCategory = "men" }: ServicesExplorerProps) {
   const { language, t } = useI18n();
   const [categoryId, setCategoryId] = useState(initialCategory);
@@ -354,7 +366,9 @@ export function ServicesExplorer({ initialCategory = "men" }: ServicesExplorerPr
   const filtered = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
     return menu.filter((item) => {
-      const matchesCategory = activeCategory.kind.includes(item.category);
+      const matchesCategory =
+        activeCategory.kind.includes(item.category) ||
+        (activeCategory.id === "men" && menCatalogServiceIds.has(item.id));
       const matchesSearch =
         query.length === 0 ||
         `${item.name} ${item.description} ${item.category}`.toLowerCase().includes(query);

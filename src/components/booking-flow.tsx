@@ -26,6 +26,7 @@ import {
 import { offerDiscount, specialOffers, type SpecialOffer } from "@/data/offers";
 import { useI18n } from "@/lib/i18n";
 import { getServiceDescription, getServiceName } from "@/data/service-translations";
+import { AnniversaryPrice } from "@/components/anniversary-price";
 
 export const WHATSAPP_NUMBER = "66929050509";
 export const LINE_ACCOUNT_ID = "shu0865";
@@ -1431,7 +1432,7 @@ export function BookingFlow({
                       </span>
                     </span>
                     <span className="flex shrink-0 flex-col items-end gap-1">
-                      <span className="font-display text-lg text-primary">฿{price}</span>
+                      <AnniversaryPrice price={price} className="text-sm" />
                       <span className="flex items-center gap-1 text-[0.58rem] uppercase tracking-[0.16em] text-muted-foreground">
                         <Clock className="size-3" /> {minutes} {t.minutesShort}
                       </span>

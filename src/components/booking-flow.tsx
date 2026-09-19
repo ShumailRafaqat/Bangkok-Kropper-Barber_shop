@@ -722,9 +722,29 @@ function buildDays(count: number) {
 
 function isMobileDevice() {
   if (typeof window === "undefined") return false;
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent,
+  const mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    window.navigator.userAgent,
   );
+  // iPadOS can report a desktop Mac user agent.
+  const isIPad = /Macintosh|MacIntel/i.test(
+    `${window.navigator.userAgent} ${window.navigator.platform}`,
+  ) && window.navigator.maxTouchPoints > 1;
+  return mobileUserAgent || isIPad || window.matchMedia("(max-width: 767px)").matches;
+}
+
+function useMobileDevice() {
+  // Hide the QR until device detection finishes, including during SSR hydration.
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(isMobileDevice());
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return isMobile;
 }
 
 function buildLineUrl(message: string) {
@@ -748,6 +768,7 @@ export function BookingFlow({
     language === "th" ? ["บริการ", "วันที่", "เวลา", "รายละเอียด", "ยืนยัน"] : steps;
   const days = useMemo(() => buildDays(21), []);
   const [step, setStep] = useState(0);
+  const isMobile = useMobileDevice();
   const [service, setService] = useState<Svc | null>(null);
   const [selectedServices, setSelectedServices] = useState<Svc[]>([]);
   const [matchedOffer, setMatchedOffer] = useState<SpecialOffer | null>(null);
@@ -891,6 +912,12 @@ export function BookingFlow({
   };
 
   const send = () => {
+    if (contactMethod === "line" && isMobileDevice()) {
+      // Navigate during the user's tap so the browser can hand off to LINE.
+      // Keep the review screen available if they return or app opening is blocked.
+      window.location.assign(buildLineUrl(message()));
+      return;
+    }
     setSending(true);
     if (contactMethod === "line") {
       const lineUrl = buildLineUrl(message());
@@ -1432,7 +1459,7 @@ export function BookingFlow({
 
             {isLineChannel ? (
               <div className="mt-6 space-y-5">
-                {!isMobileDevice() && (
+                {isMobile === false && (
                   <div className="flex flex-col items-center gap-4 rounded-sm border border-primary/40 bg-background/70 p-6 text-center">
                     <p className="text-sm font-medium text-foreground">
                       Scan this QR with your phone camera
@@ -1464,7 +1491,7 @@ export function BookingFlow({
                     )}
                   </button>
 
-                  {!isMobileDevice() && (
+                  {isMobile === false && (
                     <button
                       type="button"
                       onClick={() => {
@@ -1478,7 +1505,7 @@ export function BookingFlow({
                 </div>
 
                 <p className="text-center text-xs text-muted-foreground">
-                  {isMobileDevice()
+                  {isMobile !== false
                     ? "LINE will open with your booking details already typed. Just press Send."
                     : "After opening LINE, just press Send. We will confirm your appointment."}
                 </p>

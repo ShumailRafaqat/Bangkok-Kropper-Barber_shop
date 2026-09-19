@@ -1,0 +1,740 @@
+/* ═══════════════════════════════════════════════
+   BANGKOK KROPPER — ANNIVERSARY WELCOME OFFER
+   Image-free · Compact · Elegant Edition
+   ═══════════════════════════════════════════════ */
+
+.anniversary-welcome,
+.anniversary-welcome * {
+  box-sizing: border-box;
+}
+
+/* ── Root overlay ───────────────────────────── */
+.anniversary-welcome {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(
+      ellipse at 20% 10%,
+      rgba(196, 154, 78, 0.08),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 85% 90%,
+      rgba(244, 217, 129, 0.06),
+      transparent 50%
+    ),
+    rgba(8, 8, 7, 0.82);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  animation: anniversary-welcome-fade 700ms ease both;
+  overflow: hidden;
+}
+
+/* ── Ambient glows ──────────────────────────── */
+.anniversary-welcome__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.anniversary-welcome__glow--gold {
+  top: -12%;
+  left: -8%;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(
+    circle,
+    rgba(196, 154, 78, 0.35),
+    transparent 70%
+  );
+  animation: anniversary-welcome-float 14s ease-in-out infinite;
+}
+
+.anniversary-welcome__glow--warm {
+  bottom: -14%;
+  right: -6%;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(
+    circle,
+    rgba(244, 217, 129, 0.22),
+    transparent 70%
+  );
+  animation: anniversary-welcome-float 18s ease-in-out infinite reverse;
+}
+
+/* ── Compact Card ───────────────────────────── */
+.anniversary-welcome__card {
+  position: relative;
+  width: min(520px, 100%);
+  min-height: 400px;
+  height: auto;
+  display: block;
+  overflow: hidden;
+
+  border: 1px solid rgba(196, 154, 78, 0.5);
+  border-radius: 8px 34px 8px 34px;
+
+  background:
+    radial-gradient(
+      circle at 88% 8%,
+      rgba(196, 154, 78, 0.13),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 8% 92%,
+      rgba(196, 154, 78, 0.08),
+      transparent 30%
+    ),
+    linear-gradient(145deg, #16130f 0%, #0d0c0a 100%);
+
+  box-shadow:
+    0 40px 120px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 248, 210, 0.06);
+
+  animation:
+    anniversary-welcome-card
+    900ms cubic-bezier(0.16, 1, 0.3, 1) 100ms both;
+}
+
+.anniversary-welcome__card--intro {
+  animation-name:
+    anniversary-welcome-card,
+    anniversary-welcome-slide-in;
+}
+
+/* Inner decorative frame */
+.anniversary-welcome__card::before {
+  position: absolute;
+  z-index: 3;
+  inset: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2px 26px 2px 26px;
+  content: "";
+  pointer-events: none;
+}
+
+/* Decorative corner details */
+.anniversary-welcome__card::after {
+  position: absolute;
+  z-index: 1;
+  top: 28px;
+  left: 30px;
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(196, 154, 78, 0.9),
+    transparent
+  );
+  content: "";
+}
+
+/* ── Content ────────────────────────────────── */
+.anniversary-welcome__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 400px;
+  padding: 46px 48px 40px;
+}
+
+/* ── Badge ──────────────────────────────────── */
+.anniversary-welcome__badge {
+  position: absolute;
+  top: 34px;
+  right: 38px;
+
+  display: grid;
+  place-items: center;
+
+  width: 94px;
+  height: 94px;
+
+  margin: 0;
+
+  border: 1px solid rgba(244, 217, 129, 0.75);
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #f7e4a5 0%,
+      #d2aa5c 58%,
+      #a97d35 100%
+    );
+
+  color: #11100d;
+
+  box-shadow:
+    0 18px 40px rgba(196, 154, 78, 0.25),
+    inset 0 0 0 4px rgba(255, 248, 210, 0.18);
+
+  transform: rotate(5deg);
+  overflow: hidden;
+
+  animation:
+    anniversary-welcome-badge
+    850ms cubic-bezier(0.16, 1, 0.3, 1) 350ms both;
+}
+
+.anniversary-welcome__badge-shine {
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  animation: anniversary-welcome-shine 3s ease-in-out infinite;
+}
+
+.anniversary-welcome__badge strong {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.08em;
+}
+
+.anniversary-welcome__badge span {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+}
+
+/* ── Stage icon ─────────────────────────────── */
+.anniversary-welcome__icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(196, 154, 78, 0.45);
+  border-radius: 50%;
+  background: rgba(196, 154, 78, 0.08);
+  color: #c49a4e;
+  animation: anniversary-welcome-rise 600ms ease 400ms both;
+}
+
+/* ── Typography ─────────────────────────────── */
+.anniversary-welcome__eyebrow,
+.anniversary-welcome__note {
+  color: #c49a4e;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.anniversary-welcome__eyebrow {
+  margin: 0;
+  animation: anniversary-welcome-rise 600ms ease 500ms both;
+}
+
+.anniversary-welcome h2 {
+  max-width: 100%;
+  margin: 14px 0 0;
+  padding-top: 3px;
+
+  color: #f4eee1;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-transform: none;
+
+  background: linear-gradient(
+    180deg,
+    #f8f2e4 0%,
+    #d9cba8 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: anniversary-welcome-rise 700ms ease 700ms both;
+}
+
+.anniversary-welcome h2 span {
+  display: block;
+  margin-top: 13px;
+
+  font-size: 0.28em;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+
+  background: linear-gradient(
+    180deg,
+    #f4d981 0%,
+    #c49a4e 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.anniversary-welcome__copy {
+  max-width: 430px;
+  margin: 19px 0 0;
+  color: rgba(244, 238, 225, 0.72);
+  font-size: 13px;
+  line-height: 1.7;
+  animation: anniversary-welcome-rise 700ms ease 900ms both;
+}
+
+.anniversary-welcome__typewriter {
+  min-height: 66px;
+}
+
+.anniversary-welcome__caret {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  margin-left: 4px;
+  vertical-align: -0.15em;
+  background: #c49a4e;
+  box-shadow: 0 0 8px rgba(196, 154, 78, 0.8);
+  animation: anniversary-welcome-caret 800ms steps(1) infinite;
+}
+
+/* ── Offer Details ──────────────────────────── */
+.anniversary-welcome__details {
+  display: grid;
+  gap: 0;
+  margin-top: 17px;
+  border-top: 1px solid rgba(196, 154, 78, 0.2);
+  border-bottom: 1px solid rgba(196, 154, 78, 0.2);
+}
+
+.anniversary-welcome__detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.anniversary-welcome__detail:last-child {
+  border-bottom: none;
+}
+
+.anniversary-welcome__detail-label {
+  flex-shrink: 0;
+  color: #c49a4e;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  line-height: 1.4;
+}
+
+.anniversary-welcome__detail strong {
+  color: rgba(244, 238, 225, 0.82);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: right;
+}
+
+/* ── Rule ───────────────────────────────────── */
+.anniversary-welcome__rule {
+  width: 100%;
+  height: 1px;
+  margin: 20px 0 14px;
+  background: linear-gradient(
+    90deg,
+    rgba(196, 154, 78, 0.6),
+    rgba(196, 154, 78, 0.05)
+  );
+  transform-origin: left;
+  animation: anniversary-welcome-rule 700ms ease 1100ms both;
+}
+
+.anniversary-welcome__note {
+  margin: 12px 0 0;
+  color: rgba(244, 238, 225, 0.48);
+  font-size: 8px;
+  line-height: 1.6;
+  text-transform: none;
+  letter-spacing: 0.05em;
+  animation: anniversary-welcome-rise 700ms ease 1200ms both;
+}
+
+/* ── CTA ────────────────────────────────────── */
+.anniversary-welcome__cta {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: fit-content;
+  margin-top: 18px;
+  padding: 13px 22px;
+  border: 1px solid #c49a4e;
+  border-radius: 2px 14px 2px 14px;
+  color: #c49a4e;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition:
+    color 280ms ease,
+    transform 280ms ease,
+    box-shadow 280ms ease;
+  animation: anniversary-welcome-rise 700ms ease 1300ms both;
+}
+
+.anniversary-welcome__cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    #f4d981 0%,
+    #c49a4e 100%
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+
+.anniversary-welcome__cta span,
+.anniversary-welcome__cta svg {
+  position: relative;
+  z-index: 1;
+  transition: transform 280ms ease;
+}
+
+.anniversary-welcome__cta:hover {
+  color: #11100d;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(196, 154, 78, 0.35);
+}
+
+.anniversary-welcome__cta:hover::before {
+  transform: scaleX(1);
+}
+
+.anniversary-welcome__cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* ── Close ──────────────────────────────────── */
+.anniversary-welcome__close {
+  position: absolute;
+  z-index: 4;
+  top: 30px;
+  right: 30px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(244, 238, 225, 0.28);
+  border-radius: 50%;
+  background: rgba(17, 16, 13, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #f4eee1;
+  cursor: pointer;
+  transition:
+    background-color 260ms ease,
+    color 260ms ease,
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 260ms ease;
+}
+
+.anniversary-welcome__close:hover {
+  background: #c49a4e;
+  border-color: #c49a4e;
+  color: #11100d;
+  transform: rotate(90deg) scale(1.05);
+}
+
+/* ── Reopen launcher ────────────────────────── */
+.anniversary-welcome__launcher {
+  position: fixed;
+  z-index: 90;
+  right: 24px;
+  bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 16px;
+  border: 1px solid rgba(196, 154, 78, 0.72);
+  border-radius: 2px 14px 2px 14px;
+  background: rgba(17, 16, 13, 0.94);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.28),
+    0 0 24px rgba(196, 154, 78, 0.14);
+  color: #f4d981;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition:
+    transform 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+  animation: anniversary-welcome-launcher 700ms ease both;
+}
+
+.anniversary-welcome__launcher:hover {
+  background: #c49a4e;
+  color: #11100d;
+  transform: translateY(-3px);
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.32),
+    0 0 28px rgba(196, 154, 78, 0.28);
+}
+
+.anniversary-welcome__launcher svg {
+  flex-shrink: 0;
+}
+
+/* ── Keyframes ──────────────────────────────── */
+@keyframes anniversary-welcome-launcher {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes anniversary-welcome-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes anniversary-welcome-card {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes anniversary-welcome-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-32px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes anniversary-welcome-badge {
+  from {
+    opacity: 0;
+    transform: translateY(-18px) rotate(14deg) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(5deg) scale(1);
+  }
+}
+
+@keyframes anniversary-welcome-shine {
+  0% { left: -60%; }
+  50%, 100% { left: 120%; }
+}
+
+@keyframes anniversary-welcome-caret {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+@keyframes anniversary-welcome-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes anniversary-welcome-rule {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes anniversary-welcome-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -20px) scale(1.1);
+  }
+}
+
+/* ── Responsive ────────────────────────────── */
+@media (max-width: 600px) {
+  .anniversary-welcome {
+    padding: 14px;
+  }
+
+  .anniversary-welcome__card {
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    border-radius: 7px 24px 7px 24px;
+  }
+
+  .anniversary-welcome__card::before {
+    inset: 8px;
+    border-radius: 2px 18px 2px 18px;
+  }
+
+  .anniversary-welcome__content {
+    min-height: 0;
+    padding: 30px 20px 24px;
+  }
+
+  .anniversary-welcome__badge {
+    position: relative;
+    top: auto;
+    right: auto;
+    align-self: flex-end;
+    width: 66px;
+    height: 66px;
+    margin: -6px 2px 13px 0;
+  }
+
+  .anniversary-welcome__badge strong {
+    font-size: 1.4rem;
+  }
+
+  .anniversary-welcome__icon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 12px;
+  }
+
+  .anniversary-welcome h2 {
+    max-width: 100%;
+    margin-top: 9px;
+    padding-top: 2px;
+    font-size: clamp(1.5rem, 7.5vw, 2rem);
+    line-height: 1.05;
+  }
+
+  .anniversary-welcome h2 span {
+    margin-top: 6px;
+    font-size: 0.3em;
+  }
+
+  .anniversary-welcome__copy {
+    max-width: 100%;
+    margin-top: 12px;
+    font-size: 11.5px;
+    line-height: 1.55;
+  }
+
+  .anniversary-welcome__typewriter {
+    min-height: 0;
+  }
+
+  .anniversary-welcome__details {
+    margin-top: 14px;
+  }
+
+  .anniversary-welcome__detail {
+    align-items: flex-start;
+    gap: 12px;
+    padding: 9px 0;
+  }
+
+  .anniversary-welcome__detail-label {
+    max-width: 45%;
+    font-size: 7px;
+  }
+
+  .anniversary-welcome__detail strong {
+    max-width: 58%;
+    font-size: 9px;
+  }
+
+  .anniversary-welcome__note {
+    margin-top: 11px;
+    line-height: 1.5;
+  }
+
+  .anniversary-welcome__cta {
+    width: 100%;
+    margin-top: 15px;
+    padding: 11px 16px;
+    font-size: 8px;
+  }
+
+  .anniversary-welcome__close {
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .anniversary-welcome__launcher {
+    right: 14px;
+    bottom: 14px;
+  }
+}
+
+/* ── Reduced motion ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .anniversary-welcome,
+  .anniversary-welcome__card,
+  .anniversary-welcome__eyebrow,
+  .anniversary-welcome h2,
+  .anniversary-welcome__copy,
+  .anniversary-welcome__rule,
+  .anniversary-welcome__note,
+  .anniversary-welcome__cta,
+  .anniversary-welcome__badge,
+  .anniversary-welcome__icon,
+  .anniversary-welcome__glow,
+  .anniversary-welcome__badge-shine,
+  .anniversary-welcome__launcher {
+    animation: none !important;
+  }
+
+  .anniversary-welcome__caret {
+    animation: none;
+    opacity: 1;
+  }
+}

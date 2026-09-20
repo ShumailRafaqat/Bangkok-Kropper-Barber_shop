@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "@tanstack/react-router";
 import {
@@ -721,30 +721,25 @@ function buildDays(count: number) {
 }
 
 function isMobileDevice() {
-  if (typeof window === "undefined") return false;
-  const mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    window.navigator.userAgent,
+  if (typeof window === "undefined") return true;
+  const mobileAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
   );
-  // iPadOS can report a desktop Mac user agent.
-  const isIPad = /Macintosh|MacIntel/i.test(
-    `${window.navigator.userAgent} ${window.navigator.platform}`,
-  ) && window.navigator.maxTouchPoints > 1;
-  return mobileUserAgent || isIPad || window.matchMedia("(max-width: 767px)").matches;
+  const desktopModeIPad = navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+  return mobileAgent || desktopModeIPad || window.matchMedia("(max-width: 767px)").matches;
 }
 
+// Start without a QR on both server and client to avoid hydration mismatches.
 function useMobileDevice() {
-  // Hide the QR until device detection finishes, including during SSR hydration.
-  const [isMobile, setIsMobile] = useState<boolean | null>(null);
-
+  const [mobile, setMobile] = useState<boolean | null>(null);
   useEffect(() => {
-    const media = window.matchMedia("(max-width: 767px)");
-    const update = () => setIsMobile(isMobileDevice());
+    const viewport = window.matchMedia("(max-width: 767px)");
+    const update = () => setMobile(isMobileDevice());
     update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
+    viewport.addEventListener("change", update);
+    return () => viewport.removeEventListener("change", update);
   }, []);
-
-  return isMobile;
+  return mobile;
 }
 
 function buildLineUrl(message: string) {
@@ -768,7 +763,6 @@ export function BookingFlow({
     language === "th" ? ["บริการ", "วันที่", "เวลา", "รายละเอียด", "ยืนยัน"] : steps;
   const days = useMemo(() => buildDays(21), []);
   const [step, setStep] = useState(0);
-  const isMobile = useMobileDevice();
   const [service, setService] = useState<Svc | null>(null);
   const [selectedServices, setSelectedServices] = useState<Svc[]>([]);
   const [matchedOffer, setMatchedOffer] = useState<SpecialOffer | null>(null);
@@ -794,6 +788,17 @@ export function BookingFlow({
   const channelLabel = (method: "whatsapp" | "line") => (method === "line" ? "LINE" : "WhatsApp");
   const currentChannel = contactMethod ?? "whatsapp";
   const isLineChannel = currentChannel === "line";
+  const isMobile = useMobileDevice();
+  const lineConfirmationRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (step !== 4 || !isLineChannel || isMobile === null) return;
+    const frame = window.requestAnimationFrame(() => {
+      lineConfirmationRef.current?.focus({ preventScroll: true });
+      lineConfirmationRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [step, isLineChannel, isMobile]);
 
   const selectChannel = (method: "whatsapp" | "line") => {
     setBookingStarted(true);
@@ -912,21 +917,14 @@ export function BookingFlow({
   };
 
   const send = () => {
-    if (contactMethod === "line" && isMobileDevice()) {
-      // Navigate during the user's tap so the browser can hand off to LINE.
-      // Keep the review screen available if they return or app opening is blocked.
+    if (contactMethod === "line") {
       window.location.assign(buildLineUrl(message()));
       return;
     }
     setSending(true);
-    if (contactMethod === "line") {
-      const lineUrl = buildLineUrl(message());
-      window.open(lineUrl, "_blank", "noopener,noreferrer");
-    } else {
-      const encodedMessage = encodeURIComponent(message());
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
-      window.open(url, "_blank", "noopener,noreferrer");
-    }
+    const encodedMessage = encodeURIComponent(message());
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+    window.open(url, "_blank", "noopener,noreferrer");
     setTimeout(() => {
       setSending(false);
       setDone(true);
@@ -1385,6 +1383,41 @@ export function BookingFlow({
 
         {step === 4 && (
           <>
+            {isLineChannel && (
+              <div
+                ref={lineConfirmationRef}
+                tabIndex={-1}
+                aria-label="Confirm your booking via LINE"
+                className="mb-6 scroll-mt-28 rounded-sm border border-primary/60 bg-background p-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                {isMobile === false ? (
+                  <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-center">
+                    <div className="shrink-0 rounded-sm bg-white p-4" role="img" aria-label="Scan to open your booking in LINE">
+                      <QRCode value={buildLineUrl(message())} size={220} level="M" />
+                    </div>
+                    <div className="min-w-0 text-center sm:text-left">
+                      <h3 className="font-display text-xl text-primary">Scan to confirm via LINE</h3>
+                      <p className="mt-3 text-sm text-foreground">Open the <strong>LINE app</strong> on your phone and use its <strong>QR scanner</strong> to scan this code.</p>
+                      <p className="mt-2 text-sm text-muted-foreground">Review your booking details in the chat, then press <strong>Send</strong>.</p>
+                      <p className="mt-3 text-xs text-muted-foreground">The shop will reply to confirm your appointment.</p>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <a
+                      href={buildLineUrl(message())}
+                      className="flex w-full items-center justify-center gap-3 rounded-sm bg-primary px-4 py-4 text-center font-display text-lg uppercase tracking-widest text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      <Send className="size-5 shrink-0" /> Confirm via LINE
+                    </a>
+                    <p className="mt-3 text-center text-sm text-muted-foreground">
+                      LINE will open with your booking details already typed. Press <strong>Send</strong>; the shop will reply to confirm.
+                    </p>
+                  </>
+                )}
+              </div>
+            )}
+
             <h3 className="font-display text-xl uppercase tracking-wide text-foreground md:text-2xl">
               {t.appointment}
             </h3>
@@ -1457,60 +1490,7 @@ export function BookingFlow({
               })()}
             </div>
 
-            {isLineChannel ? (
-              <div className="mt-6 space-y-5">
-                {isMobile === false && (
-                  <div className="flex flex-col items-center gap-4 rounded-sm border border-primary/40 bg-background/70 p-6 text-center">
-                    <p className="text-sm font-medium text-foreground">
-                      Scan this QR with your phone camera
-                    </p>
-                    <div className="rounded-lg bg-white p-3">
-                      <QRCode value={buildLineUrl(message())} size={180} level="M" />
-                    </div>
-                    <p className="max-w-xs text-xs text-muted-foreground">
-                      Open LINE → message will already be typed → just press <strong>Send</strong>
-                    </p>
-                  </div>
-                )}
-
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <button
-                    type="button"
-                    onClick={send}
-                    disabled={sending}
-                    className="flex flex-1 items-center justify-center gap-3 rounded-sm bg-primary py-4 font-display text-lg uppercase tracking-widest text-primary-foreground transition-transform enabled:hover:scale-[1.02] disabled:opacity-70"
-                  >
-                    {sending ? (
-                      <>
-                        <Loader2 className="size-5 animate-spin" /> Opening LINE…
-                      </>
-                    ) : (
-                      <>
-                        <Send className="size-5" /> Open LINE & Send
-                      </>
-                    )}
-                  </button>
-
-                  {isMobile === false && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        navigator.clipboard.writeText(message());
-                      }}
-                      className="flex items-center justify-center gap-2 rounded-sm border border-border px-5 py-4 text-sm font-bold uppercase tracking-widest text-foreground hover:border-primary hover:text-primary"
-                    >
-                      Copy Message
-                    </button>
-                  )}
-                </div>
-
-                <p className="text-center text-xs text-muted-foreground">
-                  {isMobile !== false
-                    ? "LINE will open with your booking details already typed. Just press Send."
-                    : "After opening LINE, just press Send. We will confirm your appointment."}
-                </p>
-              </div>
-            ) : (
+            {!isLineChannel && (
               <>
                 <button
                   type="button"

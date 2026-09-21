@@ -30,7 +30,7 @@ import { getServiceDescription, getServiceName } from "@/data/service-translatio
 import { AnniversaryPrice } from "@/components/anniversary-price";
 
 export const WHATSAPP_NUMBER = "66929050509";
-export const LINE_ACCOUNT_ID = "@127qywus";
+export const LINE_ACCOUNT_ID = "@007caqvt";
 
 type Svc = {
   id: string;

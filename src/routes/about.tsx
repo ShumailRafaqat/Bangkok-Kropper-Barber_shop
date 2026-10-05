@@ -1,0 +1,1138 @@
+﻿import { createFileRoute } from "@tanstack/react-router";
+import {
+  ArrowRight,
+  Check,
+  Clock3,
+  ExternalLink,
+  HeartHandshake,
+  MapPin,
+  Plus,
+  Scissors,
+  ShieldCheck,
+  SlidersHorizontal,
+  Sparkles,
+} from "lucide-react";
+import {
+  ADDRESS,
+  ADDRESS_TWO,
+  MAPS_LINK,
+  MAPS_LINK_TWO,
+  SiteHeader,
+} from "@/components/site-chrome";
+import { useI18n } from "@/lib/i18n";
+
+export const Route = createFileRoute("/about")({
+  head: () => ({
+    meta: [
+      { title: "About Bangkok Kropper Barber Shop" },
+      {
+        name: "description",
+        content: "The story, standards and people behind Bangkok Kropper Barber Shop.",
+      },
+      { property: "og:title", content: "About Bangkok Kropper Barber Shop" },
+      { property: "og:description", content: "Built on experience. Defined by craft" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [
+      { rel: "alternate", hrefLang: "en", href: "/about" },
+      { rel: "alternate", hrefLang: "th", href: "/about?lang=th" },
+      { rel: "alternate", hrefLang: "x-default", href: "/about" },
+    ],
+  }),
+  component: AboutPage,
+});
+
+const difference = [
+  [
+    "01",
+    "Craftsmanship",
+    "Our team approaches every service with attention to detail, balance and precision. We do not believe in rushing through a service just to move to the next customer.",
+  ],
+  [
+    "02",
+    "Hygiene Without Compromise",
+    "Every customer receives a fresh cape and a new blade where required. Our tools are sanitized using specialized equipment at the appropriate temperatures.",
+  ],
+  [
+    "03",
+    "A Complete Grooming Experience",
+    "Depending on the treatment, customers can experience hot and cold steam, hot and cold facial towels, aftershave application and a gentle refreshing massage.",
+  ],
+  [
+    "04",
+    "Experience Behind Every Chair",
+    "Our founders spent more than a decade working together before creating Kropper. That shared experience is the foundation for the standards we expect from our team.",
+  ],
+  [
+    "05",
+    "Value You Can Feel",
+    "We want customers to leave feeling that the experience genuinely justified the price because of the service, cleanliness, attention and care that came with it.",
+  ],
+] as const;
+
+const process = [
+  ["PREPARE", "A fresh cape and a clean environment before every service.", Scissors],
+  [
+    "SANITIZE",
+    "Tools are properly cleaned and sanitized using specialized equipment.",
+    ShieldCheck,
+  ],
+  ["CRAFT", "Every haircut and grooming service is performed with attention to detail.", Sparkles],
+  [
+    "REFINE",
+    "We take the time to make sure the final result is clean, balanced and precise.",
+    SlidersHorizontal,
+  ],
+  [
+    "FINISH",
+    "Services are completed with finishing touches designed to leave you feeling refreshed.",
+    HeartHandshake,
+  ],
+] as const;
+
+const atmosphere = [
+  [
+    "MODERN",
+    "A contemporary barber environment designed to feel energetic without feeling overwhelming.",
+  ],
+  ["PROFESSIONAL", "Experienced barbers, disciplined standards and attention to detail."],
+  [
+    "WARM",
+    "Professional does not have to mean distant. We want customers to feel welcome and comfortable.",
+  ],
+  ["PRECISE", "From the tools we use to the final finishing touches, detail matters."],
+] as const;
+
+const values = [
+  ["CRAFT", "We respect the skill behind every cut."],
+  ["CLEANLINESS", "Hygiene is not an extra feature. It is a basic responsibility."],
+  ["DISCIPLINE", "Consistency comes from standards that are followed every day."],
+  ["RESPECT", "Every customer deserves professionalism, attention and genuine care."],
+  ["TRUST", "We want customers to feel confident placing their grooming in our hands."],
+  ["GROWTH", "We continuously train and improve because great service should never stop evolving."],
+] as const;
+
+const branches = [
+  { number: "01", name: "Khlong Toei", address: ADDRESS, image: "/4.png", maps: MAPS_LINK },
+  { number: "02", name: "Phaya Thai", address: ADDRESS_TWO, image: "/8.png", maps: MAPS_LINK_TWO },
+] as const;
+
+function AboutCollage() {
+  return (
+    <div className="group relative min-h-[22rem] overflow-hidden border border-border bg-card sm:min-h-[30rem]">
+      <img
+        src="/hero.png"
+        alt="Bangkok Kropper Barber Shop storefront"
+        className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+      <p className="absolute bottom-5 left-5 border-l-2 border-primary bg-background/75 px-4 py-3 text-xs font-bold uppercase tracking-[0.18em] backdrop-blur-sm">
+        Bangkok Kropper · Est. 2024
+      </p>
+    </div>
+  );
+}
+
+function AboutPage() {
+  const { language } = useI18n();
+  if (language === "th") return <ThaiAboutPage />;
+
+  return (
+    <div className="about-page min-h-screen bg-background font-sans text-foreground">
+      <SiteHeader />
+      <main>
+        <section className="border-b border-border bg-background px-5 py-10 md:py-14">
+          <div className="mx-auto grid max-w-6xl items-center gap-7 lg:grid-cols-[0.9fr_1fr] lg:gap-12">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                Our story
+              </p>
+              <h2 className="mt-3 font-display text-3xl leading-[0.95] md:text-5xl">
+                Built on Experience.
+                <br />
+                <span className="text-primary">Defined by Craft.</span>
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                Bangkok Kropper Barber Shop was built by barbers who spent more than a decade
+                mastering the craft together. What began as a shared ambition became a place where
+                skilled hands, serious hygiene and genuine hospitality come together.
+              </p>
+              <a
+                href="#story"
+                className="mt-6 inline-flex items-center gap-2 bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-primary-foreground hover:bg-accent"
+              >
+                Discover Our Story <ArrowRight className="size-4" />
+              </a>
+            </div>
+            <AboutCollage />
+          </div>
+        </section>
+
+        <section id="story" className="border-b border-border bg-secondary/35 px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                  02 / Our Story
+                </p>
+                <h2 className="mt-5 max-w-md font-display text-4xl leading-[0.95] md:text-6xl">
+                  From Experience to Kropper
+                </h2>
+              </div>
+              <p className="max-w-xl text-base leading-8 text-muted-foreground">
+                A shared career became a shared vision: build a professional barber shop around
+                standards customers can trust.
+              </p>
+            </div>
+            <div className="relative mt-16 border-l border-primary/60 pl-7 md:ml-[16%] md:pl-12">
+              {[
+                [
+                  "10+ Years of Experience",
+                  "Before Kropper existed, our founders worked together at a renowned barber shop for more than a decade. Those years gave us a deep understanding of what customers expect from a truly professional barber shop.",
+                ],
+                [
+                  "The Decision",
+                  "Mr. Mongkolpat, Mr. Pinit and Mr. Ratchata decided to build something of their own: a shop shaped around their standards of craftsmanship, cleanliness and customer care.",
+                ],
+                [
+                  "October 8, 2024",
+                  "Bangkok Kropper Barber Shop was born. We brought together our experience, pooled our resources and created a space designed around a professional experience from the moment you walk in until the moment you leave.",
+                ],
+                [
+                  "January 20, 2025",
+                  "Kropper was officially registered as a company on January 20, 2025. It marked an important step toward building something legitimate, stable and long-term: a professional brand with a team and standards customers can trust.",
+                ],
+              ].map(([title, copy], index) => (
+                <article
+                  key={title}
+                  className="relative border-b border-border py-8 first:pt-0 last:border-0"
+                >
+                  <span className="absolute -left-[2.05rem] top-8 grid size-4 place-items-center rounded-full border border-primary bg-background text-[0.5rem] text-primary md:-left-[3.05rem]">
+                    {index + 1}
+                  </span>
+                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
+                    {title}
+                  </p>
+                  <p className="mt-4 max-w-3xl text-base leading-8 text-muted-foreground">{copy}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-5 py-20 text-center md:py-28">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              03 / Why the Name Kropper?
+            </p>
+            <h2 className="mt-5 font-display text-[5rem] leading-[0.8] text-primary sm:text-[8rem] md:text-[12rem]">
+              KROPPER
+            </h2>
+            <p className="mx-auto mt-10 max-w-2xl text-base leading-8 text-muted-foreground">
+              A name inspired by the idea of{" "}
+              <strong className="text-foreground">cutting, trimming and shaping</strong>—from pruning a
+              tree to creating a clean, precise haircut.
+            </p>
+            <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-muted-foreground">
+              We wanted a name that was distinctive, connected naturally to barbering and
+              represented what we do every day:{" "}
+              <span className="font-bold text-primary">cut, shape and refine.</span>
+            </p>
+            <div className="mt-12 border-t border-border pt-6 text-xs font-bold uppercase tracking-[0.25em] text-primary">
+              Bangkok + Kropper / A barber identity rooted in Bangkok, built around precision.
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border bg-secondary/35 px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                04 / The Kropper Difference
+              </p>
+              <h2 className="mt-5 font-display text-4xl leading-[0.95] md:text-6xl">
+                What Makes Kropper Different?
+              </h2>
+            </div>
+            <div className="mt-12 border-t border-border">
+              {difference.map(([number, title, copy]) => (
+                <details key={number} className="group border-b border-border">
+                  <summary className="flex cursor-pointer list-none items-center gap-5 py-6">
+                    <span className="font-display text-3xl text-primary/60">{number}</span>
+                    <span className="flex-1 font-display text-2xl text-foreground md:text-3xl">
+                      {title}
+                    </span>
+                    <Plus className="size-5 text-primary transition-transform group-open:rotate-45" />
+                  </summary>
+                  <p className="max-w-3xl pb-7 pl-14 text-sm leading-7 text-muted-foreground md:pl-[4.25rem]">
+                    {copy}
+                  </p>
+                </details>
+              ))}
+            </div>
+            <p className="mt-14 max-w-2xl border-l-2 border-primary pl-5 font-display text-2xl leading-tight text-foreground md:text-4xl">
+              We do not want to be remembered simply as the place where you got a haircut. We want
+              to be remembered as the place where everything felt right.
+            </p>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-5 py-14 md:py-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col justify-between gap-5 border-b border-border pb-8 md:flex-row md:items-end">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">
+                  05 / The Kropper Standard
+                </p>
+                <h2 className="mt-4 max-w-3xl font-display text-3xl leading-[0.95] md:text-5xl">
+                  Every Customer.
+                  <br />
+                  Every Chair. Every Time.
+                </h2>
+              </div>
+              <p className="max-w-sm text-xs leading-6 text-muted-foreground">
+                Standards are not claims. They are the steps we repeat until quality becomes part of
+                the experience.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
+              {process.map(([title, copy, Icon], index) => (
+                <div key={title} className="bg-background p-4 sm:p-5">
+                  <div className="flex items-center justify-between">
+                    <Icon className="size-5 text-primary" aria-hidden="true" />
+                    <span className="text-[0.65rem] font-bold text-primary">0{index + 1}</span>
+                  </div>
+                  <h3 className="mt-5 text-xs font-bold uppercase tracking-[0.14em] text-foreground">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-xs leading-5 text-muted-foreground">{copy}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="experience-section relative overflow-hidden border-b border-border bg-secondary/35 px-5 py-20 md:py-28">
+          <div className="pointer-events-none absolute -right-24 top-20 size-96 rounded-full border border-primary/15" />
+          <div className="relative mx-auto max-w-7xl">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              06 / The Experience
+            </p>
+            <h2 className="mt-5 max-w-2xl font-display text-3xl leading-[0.95] md:text-5xl">
+              It Starts With the Cut.
+              <br />
+              <span className="text-primary">It Ends With How You Feel.</span>
+            </h2>
+            <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-end">
+              <div className="space-y-5 text-base leading-8 text-muted-foreground">
+                <p>
+                  We want every customer to feel comfortable, respected and confident from the
+                  moment they enter Kropper.
+                </p>
+                <p>
+                  Whether you are visiting for a quick clean-up, a complete haircut or beard
+                  grooming, our goal is to make the experience feel considered rather than rushed.
+                </p>
+                <p>
+                  You should leave the chair feeling refreshed, confident and satisfied that your
+                  time and money were well spent.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-3 text-center font-display text-2xl text-primary sm:grid-cols-3 md:text-4xl">
+                <span className="border-y border-primary/40 py-6">COMFORT.</span>
+                <span className="border-y border-primary/40 py-6">CONFIDENCE.</span>
+                <span className="border-y border-primary/40 py-6">CRAFT.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              07 / Atmosphere & Personality
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[0.95] md:text-6xl">
+              The Kropper Character
+            </h2>
+            <div className="mt-12 grid border-t border-border sm:grid-cols-2 lg:grid-cols-4">
+              {atmosphere.map(([title, copy]) => (
+                <div
+                  key={title}
+                  className="border-b border-border py-7 sm:px-5 sm:first:pl-0 lg:border-r lg:last:border-r-0"
+                >
+                  <h3 className="font-display text-3xl text-primary">{title}</h3>
+                  <p className="mt-4 text-sm leading-7 text-muted-foreground">{copy}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-12 max-w-2xl border-l-2 border-primary pl-5 font-display text-2xl leading-tight md:text-4xl">
+              Kropper is confident without being complicated, professional without losing the human
+              side of barbering.
+            </p>
+          </div>
+        </section>
+
+        <section className="border-b border-border bg-secondary/35 px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                08 / Our Founders
+              </p>
+              <h2 className="mt-5 font-display text-4xl leading-[0.95] md:text-6xl">
+                Three Barbers. One Vision.
+              </h2>
+              <p className="mt-7 text-base leading-8 text-muted-foreground">
+                The story of Kropper begins with three colleagues who spent more than a decade
+                working together in the barber industry. Over the years, they developed individual
+                skills and a shared understanding of what a great barber shop should be.
+              </p>
+            </div>
+            <div className="mt-12 grid gap-4 md:grid-cols-3">
+              {["Founder 01", "Founder 02", "Founder 03"].map((founder) => (
+                <div
+                  key={founder}
+                  className="grid min-h-[22rem] place-items-center border border-dashed border-border bg-background/50"
+                >
+                  <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
+                    {founder} / Image Pending
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-10 text-center font-display text-2xl text-primary md:text-4xl">
+              Different strengths. Shared standards. One Kropper.
+            </p>
+          </div>
+        </section>
+
+        <section id="locations" className="border-b border-border px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              09 / Two Branches, One Kropper
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[0.95] md:text-6xl">
+              Different Doors. Same Kropper Experience.
+            </h2>
+            <p className="mx-auto mt-7 max-w-2xl text-base leading-8 text-muted-foreground">
+              Bangkok Kropper has two branches, but our identity remains the same across both
+              locations.
+            </p>
+            <div className="mx-auto mt-12 grid max-w-4xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                ["SAME CRAFTSMANSHIP", "Precision and quality."],
+                ["SAME HYGIENE STANDARD", "Cleanliness wherever you visit."],
+                ["SAME CUSTOMER CARE", "Attention and respect."],
+                ["SAME KROPPER SPIRIT", "Different locations, one philosophy."],
+              ].map(([title, copy]) => (
+                <div key={title} className="border-t border-primary px-3 py-5 text-left">
+                  <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-primary">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{copy}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-14 grid gap-5 text-left lg:grid-cols-2">
+              {branches.map((branch) => (
+                <article
+                  key={branch.number}
+                  className="group grid overflow-hidden border border-border bg-secondary/35 md:grid-cols-[0.8fr_1.2fr]"
+                >
+                  <div className="relative min-h-56 overflow-hidden">
+                    <img
+                      src={branch.image}
+                      alt={`${branch.name} Bangkok Kropper branch`}
+                      className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <span className="absolute bottom-4 left-4 font-display text-4xl text-primary">
+                      {branch.number}
+                    </span>
+                  </div>
+                  <div className="flex flex-col justify-between p-6">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
+                        Kropper, Branch {branch.number}
+                      </p>
+                      <h3 className="mt-2 font-display text-3xl">{branch.name}</h3>
+                      <p className="mt-4 flex gap-2 text-sm leading-6 text-muted-foreground">
+                        <MapPin className="mt-1 size-4 shrink-0 text-primary" />
+                        {branch.address}
+                      </p>
+                    </div>
+                    <div className="mt-6 flex flex-wrap justify-between gap-3 border-t border-border pt-4">
+                      <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                        <Clock3 className="size-4 text-primary" /> 9:00am to 5:00am
+                      </span>
+                      <a
+                        href={branch.maps}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-primary"
+                      >
+                        Open Maps <ExternalLink className="size-3.5" />
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border bg-secondary/35 px-5 py-20 md:py-28">
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.7fr_1.3fr]">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                10 / Our Values
+              </p>
+              <h2 className="mt-5 font-display text-3xl leading-[0.95] md:text-5xl">
+                What We Stand For
+              </h2>
+            </div>
+            <div className="border-t border-border">
+              {values.map(([title, copy], index) => (
+                <div key={title} className="flex gap-5 border-b border-border py-5">
+                  <span className="w-8 shrink-0 text-[0.68rem] font-bold text-primary">
+                    0{index + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-xl text-primary">{title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-5 py-20 md:py-28">
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                11 / Officially Kropper
+              </p>
+              <h2 className="mt-5 font-display text-3xl leading-[0.95] md:text-5xl">
+                Built to Last.
+                <br />
+                Built Legitimately.
+              </h2>
+              <p className="mt-6 max-w-lg text-sm leading-7 text-muted-foreground">
+                Kropper was officially established as a registered company on January 20, 2025,
+                marking an important step in our journey from an independent barber shop into a
+                formally established business.
+              </p>
+              <div className="mt-8 grid max-w-md grid-cols-2 gap-4">
+                <div className="border-t-2 border-primary pt-3">
+                  <p className="text-[0.68rem] font-bold uppercase tracking-[0.15em] text-primary">
+                    Established
+                  </p>
+                  <p className="mt-2 font-display text-xl">08.10.2024</p>
+                </div>
+                <div className="border-t-2 border-primary pt-3">
+                  <p className="text-[0.68rem] font-bold uppercase tracking-[0.15em] text-primary">
+                    Registered Company
+                  </p>
+                  <p className="mt-2 font-display text-xl">20.01.2025</p>
+                </div>
+              </div>
+            </div>
+            <figure className="overflow-hidden border border-border bg-secondary/35 p-3">
+              <img
+                src="/frame.png%20.jpg"
+                alt="Bangkok Kropper registration document"
+                className="max-h-[34rem] w-full object-contain"
+              />
+              <figcaption className="flex items-center justify-between border-t border-border px-2 pt-3 text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">
+                <span>Company registration</span>
+                <span className="text-primary">Kropper</span>
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              12 / What We Want You to Remember
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[0.95] md:text-6xl">
+              Remember the Difference.
+            </h2>
+            <div className="mx-auto mt-9 max-w-xl space-y-3 text-base leading-8 text-muted-foreground">
+              <p>We hope you remember more than the haircut.</p>
+              <p>
+                Remember the cleanliness. Remember the attention to detail. Remember the feeling of
+                being taken care of. Remember the confidence when you looked in the mirror.
+              </p>
+              <p>
+                Remember that the price was not just for a haircut—it was for the experience behind
+                it.
+              </p>
+            </div>
+            <p className="mx-auto mt-12 max-w-3xl font-display text-3xl leading-tight text-primary md:text-5xl">
+              A Kropper visit should leave you looking sharper, feeling fresher and knowing you
+              chose the right chair.
+            </p>
+          </div>
+        </section>
+
+        <section className="border-y border-border bg-secondary/35 px-5 py-20 text-center md:py-28">
+          <div className="mx-auto max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              Final Chair Call
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[0.9] md:text-6xl">
+              Ready for Your Next Cut?
+            </h2>
+            <p className="mt-6 text-base text-muted-foreground">
+              Experience the Kropper standard for yourself.
+            </p>
+            <div className="mt-9 flex flex-wrap justify-center gap-3">
+              <a
+                href="/book"
+                className="inline-flex items-center gap-2 bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-primary-foreground hover:bg-accent"
+              >
+                Book an Appointment <ArrowRight className="size-4" />
+              </a>
+              <a
+                href="/services"
+                className="inline-flex items-center gap-2 border border-border px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-foreground hover:border-primary hover:text-primary"
+              >
+                Explore Our Services <ArrowRight className="size-4" />
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+function ThaiAboutPage() {
+  const thaiDifference = [
+    [
+      "01",
+      "ฝีมือและความพิถีพิถัน",
+      "ทีมงานของเราทำทุกบริการด้วยความตั้งใจในรายละเอียด ความสมดุล และความแม่นยำ เราไม่รีบเร่งเพียงเพื่อให้เสร็จทันที และไม่ยอมลดทอนคุณภาพของงาน",
+    ],
+    [
+      "02",
+      "ความสะอาดโดยไม่ประนีประนอม",
+      "ลูกค้าทุกคนได้รับผ้าคลุมใหม่ และมีการเปลี่ยนใบมีดตามความจำเป็น อุปกรณ์ของเราได้รับการทำความสะอาดด้วยเครื่องมือเฉพาะทางภายใต้สภาวะที่เหมาะสม",
+    ],
+    [
+      "03",
+      "ประสบการณ์ดูแลแบบครบวงจร",
+      "ขึ้นอยู่กับประเภทของบริการ ลูกค้าอาจได้สัมผัสไอน้ำร้อน-เย็น ผ้าขนหนูเช็ดหน้าอบอุ่น-เย็น ครีมหลังแ shaving หรือการนวดผ่อนคลายแบบอ่อนโยน",
+    ],
+    [
+      "04",
+      "ประสบการณ์ที่อยู่เบื้องหลังทุกเก้าอี้",
+      "ผู้ก่อตั้งของเราใช้เวลากว่า 10 ปีทำงานร่วมกันก่อนจะเปิด Kropper ประสบการณ์ที่มีร่วมกันนี้คือพื้นฐานของมาตรฐานที่เราตั้งไว้สำหรับทีมงาน",
+    ],
+    [
+      "05",
+      "มูลค่าในทุกการบริการ",
+      "เราต้องการให้ลูกค้าออกจากร้านด้วยความรู้สึกว่า การใช้บริการคุ้มค่ากับราคาที่จ่ายจริง เพราะประสบการณ์ ความสะอาด ความใส่ใจ และการดูแลทุกขั้นตอนครบถ้วน",
+    ],
+  ] as const;
+
+  const thaiProcess = [
+    ["เตรียมพร้อม", "ผ้าคลุมสะอาดและสภาพแวดล้อมที่พร้อมก่อนเริ่มบริการทุกครั้ง", Scissors],
+    [
+      "ฆ่าเชื้อ",
+      "อุปกรณ์ได้รับการทำความสะอาดและฆ่าเชื้ออย่างถูกต้องด้วยเครื่องมือเฉพาะทาง",
+      ShieldCheck,
+    ],
+    ["ฝีมือ", "งานตัดผมและบริการจัดแต่งทรงทุกชิ้นทำด้วยความใส่ใจในรายละเอียด", Sparkles],
+    [
+      "ปรับแต่ง",
+      "เราให้เวลากับงานจนได้ผลลัพธ์ที่สะอาด สมดุล และแม่นยำที่สุด",
+      SlidersHorizontal,
+    ],
+    [
+      "จัดจบ",
+      "บริการสิ้นสุดด้วยรายละเอียดสุดท้ายเพื่อให้คุณรู้สึกสดชื่นและพร้อมกลับไปใช้ชีวิตต่อ",
+      HeartHandshake,
+    ],
+  ] as const;
+
+  const thaiAtmosphere = [
+    ["ทันสมัย", "สภาพแวดล้อมบาร์เบอร์สมัยใหม่ที่กระตุ้นความสดชื่น แต่ไม่รกจนเกินไป"],
+    ["มืออาชีพ", "ช่างตัดผมที่มีประสบการณ์ มาตรฐานที่เคร่งครัด และความใส่ใจในรายละเอียด"],
+    ["อบอุ่น", "ความมืออาชีพไม่จำเป็นต้องห่างเหิน เราต้องการให้ลูกค้า feel welcome และสบายใจ"],
+    ["แม่นยำ", "ตั้งแต่เครื่องมือที่ใช้จนถึงรายละเอียดสุดท้าย ทุกอย่างต้องมีความครบถ้วน"],
+  ] as const;
+
+  const thaiValues = [
+    ["ฝีมือ", "เราค уваж respect กับทักษะที่อยู่เบื้องหลังทุกการตัดทรง"],
+    ["ความสะอาด", "การรักษาความสะอาดไม่ใช่คุณลักษณะเสริม แต่เป็นหน้าที่พื้นฐาน"],
+    ["วินัย", "ความสม่ำเสมอเกิดจากมาตรฐานที่ปฏิบัติทุกวัน"],
+    ["ความเคารพ", "ลูกค้าทุกคนสมควรได้รับความเป็นมืออาชีพ ความเอาใจใส่ และความดูแลที่จริงใจ"],
+    ["ความไว้ใจ", "เราต้องการให้ลูกค้าไว้ใจได้ว่าความดูแลทรงผมอยู่ในมือเรา"],
+    ["การพัฒนา", "เราเรียนรู้และปรับปรุงอยู่เสมอ เพราะการบริการที่ดีต้องพัฒนาอย่างต่อเนื่อง"],
+  ] as const;
+
+  const thaiBranches = [
+    { number: "01", name: "คลองเตย", address: ADDRESS, image: "/4.png", maps: MAPS_LINK },
+    { number: "02", name: "พญาไท", address: ADDRESS_TWO, image: "/8.png", maps: MAPS_LINK_TWO },
+  ] as const;
+
+  return (
+    <div className="min-h-screen bg-background font-sans text-foreground">
+      <SiteHeader />
+      <main>
+        <section className="border-b border-border bg-background px-5 py-10 md:py-14">
+          <div className="mx-auto grid max-w-6xl items-center gap-7 lg:grid-cols-[0.9fr_1fr] lg:gap-12">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">
+                เรื่องราวของเรา
+              </p>
+              <h2 className="mt-3 font-display text-3xl leading-[0.95] md:text-5xl">
+                สร้างจากประสบการณ์
+                <br />
+                <span className="text-primary">ใส่ใจในทุกฝีมือ</span>
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                Bangkok Kropper เกิดจากช่างตัดผมที่ทำงานร่วมกันมานานกว่าสิบปี
+                เราสร้างพื้นที่ที่รวมฝีมือ ความสะอาด และการดูแลลูกค้าอย่างจริงใจไว้ด้วยกัน
+              </p>
+              <a
+                href="#story"
+                className="mt-6 inline-flex items-center gap-2 bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-primary-foreground"
+              >
+                รู้จักเรื่องราวของเรา <ArrowRight className="size-4" />
+              </a>
+            </div>
+            <AboutCollage />
+          </div>
+        </section>
+
+        <section id="story" className="border-b border-border bg-secondary/35 px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                  02 / เรื่องราวของเรา
+                </p>
+                <h2 className="mt-5 max-w-md font-display text-4xl leading-[0.95] md:text-6xl">
+                  จากประสบการณ์สู่ Kropper
+                </h2>
+              </div>
+              <p className="max-w-xl text-base leading-8 text-muted-foreground">
+                ความตั้งใจที่เริ่มจากประสบการณ์ร่วมกลายเป็นวิสัยทัศน์ร่วม: สร้างร้านบาร์เบอร์มืออาชีพ
+                ที่มีมาตรฐานที่ลูกค้าไว้ใจได้
+              </p>
+            </div>
+            <div className="relative mt-16 border-l border-primary/60 pl-7 md:ml-[16%] md:pl-12">
+              {[
+                [
+                  "ประสบการณ์กว่า 10 ปี",
+                  "ก่อนที่ Kropper จะเกิดขึ้น ผู้ก่อตั้งของเราเคยทำงานร่วมกันในร้านบาร์เบอร์ที่มีชื่อเสียงมากว่า 10 ปี ระยะเวลานั้นทำให้เราเข้าใจอย่างลึกซึ้งว่าลูกค้ามีความคาดหวังอะไรจากร้านบาร์เบอร์ที่จริงจัง",
+                ],
+                [
+                  "การตัดสินใจ",
+                  "นาย มงคลพัฒน์ นาย ปินิธิ์ และนาย รัชตะ ได้ตัดสินใจสร้างสิ่งที่เป็นของตัวเอง: ร้านที่ถูกออกแบบตามมาตรฐานของฝีมือ ความสะอาด และการดูแลลูกค้า",
+                ],
+                [
+                  "8 ตุลาคม 2024",
+                  "Bangkok Kropper Barber Shop จึงถือกำเนิดขึ้น เรานำประสบการณ์ที่มีมารวมกัน จัดสรรทรัพยากร และสร้างพื้นที่ที่ออกแบบเพื่อประสบการณ์มืออาชีพตั้งแต่ก้าวเข้าร้านจนถึงช่วงเวลาที่ออกจากเก้าอี้",
+                ],
+                [
+                  "20 มกราคม 2025",
+                  "Kropper ได้จดทะเบียนเป็นบริษัทอย่างเป็นทางการเมื่อวันที่ 20 มกราคม 2025 ซึ่งเป็นก้าวสำคัญที่สรุปถึงการพัฒนาจากร้านบาร์เบอร์อิสระสู่แบรนด์ที่มีความมั่นคงและพร้อมดูแลลูกค้าในระยะยาว",
+                ],
+              ].map(([title, copy], index) => (
+                <article
+                  key={title}
+                  className="relative border-b border-border py-8 first:pt-0 last:border-0"
+                >
+                  <span className="absolute -left-[2.05rem] top-8 grid size-4 place-items-center rounded-full border border-primary bg-background text-[0.5rem] text-primary md:-left-[3.05rem]">
+                    {index + 1}
+                  </span>
+                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
+                    {title}
+                  </p>
+                  <p className="mt-4 max-w-3xl text-base leading-8 text-muted-foreground">{copy}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-5 py-20 text-center md:py-28">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              03 / ทำไมถึงตั้งชื่อ Kropper?
+            </p>
+            <h2 className="mt-5 font-display text-[5rem] leading-[0.8] text-primary sm:text-[8rem] md:text-[12rem]">
+              KROPPER
+            </h2>
+            <p className="mx-auto mt-10 max-w-2xl text-base leading-8 text-muted-foreground">
+              ชื่อที่ได้รับแรงบันดาลใจจากแนวคิดเรื่อง <strong className="text-foreground">ตัด ละเอียด เสริมรูป</strong>
+              — จากการตัดกิ่งไม้จนถึงการตัดผมให้เรียบและได้รูปอย่างแม่นยำ
+            </p>
+            <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-muted-foreground">
+              เราต้องการชื่อที่แตกต่าง มีความเกี่ยวข้องกับงานบาร์เบอร์โดยธรรมชาติ และสะท้อนสิ่งที่เราทำทุกวัน: <span className="font-bold text-primary">ตัด ทำให้รูปทรง และปรับแต่ง</span>
+            </p>
+            <div className="mt-12 border-t border-border pt-6 text-xs font-bold uppercase tracking-[0.25em] text-primary">
+              Bangkok + Kropper / แบรนด์บาร์เบอร์ที่ตั้งอยู่ในกรุงเทพฯ และเริ่มจากความแม่นยำ
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border bg-secondary/35 px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                04 / จุดแตกต่างของ Kropper
+              </p>
+              <h2 className="mt-5 font-display text-4xl leading-[0.95] md:text-6xl">
+                Kropper แตกต่างอย่างไร?
+              </h2>
+            </div>
+            <div className="mt-12 border-t border-border">
+              {thaiDifference.map(([number, title, copy]) => (
+                <details key={number} className="group border-b border-border">
+                  <summary className="flex cursor-pointer list-none items-center gap-5 py-6">
+                    <span className="font-display text-3xl text-primary/60">{number}</span>
+                    <span className="flex-1 font-display text-2xl text-foreground md:text-3xl">
+                      {title}
+                    </span>
+                    <Plus className="size-5 text-primary transition-transform group-open:rotate-45" />
+                  </summary>
+                  <p className="max-w-3xl pb-7 pl-14 text-sm leading-7 text-muted-foreground md:pl-[4.25rem]">
+                    {copy}
+                  </p>
+                </details>
+              ))}
+            </div>
+            <p className="mt-14 max-w-2xl border-l-2 border-primary pl-5 font-display text-2xl leading-tight text-foreground md:text-4xl">
+              เราไม่อยากให้คนจำแค่เพียงที่ที่คุณตัดผม แต่เราต้องการให้จำได้ว่า ทุกอย่างในที่นี่รู้สึกถูกต้อง
+            </p>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-5 py-14 md:py-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col justify-between gap-5 border-b border-border pb-8 md:flex-row md:items-end">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">
+                  05 / มาตรฐานของ Kropper
+                </p>
+                <h2 className="mt-4 max-w-3xl font-display text-3xl leading-[0.95] md:text-5xl">
+                  ทุกคน
+                  <br />
+                  ทุกเก้าอี้ ทุกครั้ง
+                </h2>
+              </div>
+              <p className="max-w-sm text-xs leading-6 text-muted-foreground">
+                มาตรฐานไม่ใช่คำพูด แต่เป็นขั้นตอนที่เราทำซ้ำจนคุณภาพกลายเป็นส่วนหนึ่งของประสบการณ์
+              </p>
+            </div>
+            <div className="mt-8 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
+              {thaiProcess.map(([title, copy, Icon], index) => (
+                <div key={title} className="bg-background p-4 sm:p-5">
+                  <div className="flex items-center justify-between">
+                    <Icon className="size-5 text-primary" aria-hidden="true" />
+                    <span className="text-[0.65rem] font-bold text-primary">0{index + 1}</span>
+                  </div>
+                  <h3 className="mt-5 text-xs font-bold uppercase tracking-[0.14em] text-foreground">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-xs leading-5 text-muted-foreground">{copy}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="experience-section relative overflow-hidden border-b border-border bg-secondary/35 px-5 py-20 md:py-28">
+          <div className="pointer-events-none absolute -right-24 top-20 size-96 rounded-full border border-primary/15" />
+          <div className="relative mx-auto max-w-7xl">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              06 / ประสบการณ์
+            </p>
+            <h2 className="mt-5 max-w-2xl font-display text-3xl leading-[0.95] md:text-5xl">
+              เริ่มจากการตัดผม
+              <br />
+              <span className="text-primary">จบที่ความรู้สึกที่คุณได้รับ</span>
+            </h2>
+            <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-end">
+              <div className="space-y-5 text-base leading-8 text-muted-foreground">
+                <p>
+                  เราต้องการให้ทุกคนรู้สึกสบายใจ เคารพ และมั่นใจตั้งแต่ก้าวเข้ามาใน Kropper
+                </p>
+                <p>
+                  ไม่ว่าคุณจะมารับบริการแบบเสร็จเร็ว ทรงผมใหม่ หรือจัดแต่งหนวด
+                  เป้าหมายของเราคือการทำให้ประสบการณ์รู้สึกมีการคำนึงและไม่รีบเร่งเกินจำเป็น
+                </p>
+                <p>
+                  คุณควรจะออกจากเก้าอี้ด้วยความสดชื่น มั่นใจ และรู้สึกว่าค่าจ่ายตรงกับประสบการณ์ที่ได้รับ
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-3 text-center font-display text-2xl text-primary sm:grid-cols-3 md:text-4xl">
+                <span className="border-y border-primary/40 py-6">สบายใจ.</span>
+                <span className="border-y border-primary/40 py-6">มั่นใจ.</span>
+                <span className="border-y border-primary/40 py-6">ฝีมือ.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              07 / บรรยากาศและบุคลิก
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[0.95] md:text-6xl">
+              บุคลิกของ Kropper
+            </h2>
+            <div className="mt-12 grid border-t border-border sm:grid-cols-2 lg:grid-cols-4">
+              {thaiAtmosphere.map(([title, copy]) => (
+                <div
+                  key={title}
+                  className="border-b border-border py-7 sm:px-5 sm:first:pl-0 lg:border-r lg:last:border-r-0"
+                >
+                  <h3 className="font-display text-3xl text-primary">{title}</h3>
+                  <p className="mt-4 text-sm leading-7 text-muted-foreground">{copy}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-12 max-w-2xl border-l-2 border-primary pl-5 font-display text-2xl leading-tight md:text-4xl">
+              Kropper มั่นใจ แต่ไม่ซับซ้อน มืออาชีพ แต่ไม่ลืมความเป็นคนที่อยู่เบื้องหลังงานบาร์เบอร์
+            </p>
+          </div>
+        </section>
+
+        <section className="border-b border-border bg-secondary/35 px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                08 / ผู้ก่อตั้ง
+              </p>
+              <h2 className="mt-5 font-display text-4xl leading-[0.95] md:text-6xl">
+                สามช่างหนึ่งวิสัยทัศน์
+              </h2>
+              <p className="mt-7 text-base leading-8 text-muted-foreground">
+                เรื่องราวของ Kropper เริ่มจากสามเพื่อนร่วมงานที่เคยทำงานด้วยกันมากกว่าทศวรรษ
+                จนพัฒนาทักษะและความเข้าใจร่วมกันว่าร้านบาร์เบอร์ที่ดีควรเป็นอย่างไร
+              </p>
+            </div>
+            <div className="mt-12 grid gap-4 md:grid-cols-3">
+              {["ผู้ก่อตั้ง 01", "ผู้ก่อตั้ง 02", "ผู้ก่อตั้ง 03"].map((founder) => (
+                <div
+                  key={founder}
+                  className="grid min-h-[22rem] place-items-center border border-dashed border-border bg-background/50"
+                >
+                  <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
+                    {founder} / ภาพยังรอการอัปโหลด
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-10 text-center font-display text-2xl text-primary md:text-4xl">
+              ความแข็งแกร่งที่ต่างกัน มาตรฐานที่ร่วมกัน และ Kropper ในหนึ่งใจ
+            </p>
+          </div>
+        </section>
+
+        <section id="locations" className="border-b border-border px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-7xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              09 / สาขา 2 สาขา เดียวกัน
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[0.95] md:text-6xl">
+              ประตูที่ต่างกัน แต่ประสบการณ์ Kropper เดียวกัน
+            </h2>
+            <p className="mx-auto mt-7 max-w-2xl text-base leading-8 text-muted-foreground">
+              Bangkok Kropper มี 2 สาขา แต่เอกลักษณ์และค่ามาตรฐานของเราเหมือนกันทุกสถานที่
+            </p>
+            <div className="mx-auto mt-12 grid max-w-4xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                ["ฝีมือเดียวกัน", "ความแม่นยำและคุณภาพที่เท่าเทียมกัน"],
+                ["มาตรฐานความสะอาดเดียวกัน", "ความสะอาดทุกจุดที่คุณเข้ามา"],
+                ["การดูแลลูกค้าเดียวกัน", "ความเอาใจใส่และความเคารพที่เท่ากัน"],
+                ["จิตวิญญาณ Kropper เดียวกัน", "สถานที่ต่างกัน แต่หลักการเหมือนกัน"],
+              ].map(([title, copy]) => (
+                <div key={title} className="border-t border-primary px-3 py-5 text-left">
+                  <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-primary">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{copy}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-14 grid gap-5 text-left lg:grid-cols-2">
+              {thaiBranches.map((branch) => (
+                <article
+                  key={branch.number}
+                  className="group grid overflow-hidden border border-border bg-secondary/35 md:grid-cols-[0.8fr_1.2fr]"
+                >
+                  <div className="relative min-h-56 overflow-hidden">
+                    <img
+                      src={branch.image}
+                      alt={`${branch.name} Bangkok Kropper branch`}
+                      className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <span className="absolute bottom-4 left-4 font-display text-4xl text-primary">
+                      {branch.number}
+                    </span>
+                  </div>
+                  <div className="flex flex-col justify-between p-6">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
+                        Kropper, สาขา {branch.number}
+                      </p>
+                      <h3 className="mt-2 font-display text-3xl">{branch.name}</h3>
+                      <p className="mt-4 flex gap-2 text-sm leading-6 text-muted-foreground">
+                        <MapPin className="mt-1 size-4 shrink-0 text-primary" />
+                        {branch.address}
+                      </p>
+                    </div>
+                    <div className="mt-6 flex flex-wrap justify-between gap-3 border-t border-border pt-4">
+                      <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                        <Clock3 className="size-4 text-primary" /> 09:00 – 05:00
+                      </span>
+                      <a
+                        href={branch.maps}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-primary"
+                      >
+                        เปิดแผนที่ <ExternalLink className="size-3.5" />
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border bg-secondary/35 px-5 py-20 md:py-28">
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.7fr_1.3fr]">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                10 / ค่านิยมของเรา
+              </p>
+              <h2 className="mt-5 font-display text-3xl leading-[0.95] md:text-5xl">
+                เราสร้างสิ่งที่เราเชื่อ
+              </h2>
+            </div>
+            <div className="border-t border-border">
+              {thaiValues.map(([title, copy], index) => (
+                <div key={title} className="flex gap-5 border-b border-border py-5">
+                  <span className="w-8 shrink-0 text-[0.68rem] font-bold text-primary">
+                    0{index + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-xl text-primary">{title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-5 py-20 md:py-28">
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+                11 / อย่างเป็นทางการ
+              </p>
+              <h2 className="mt-5 font-display text-3xl leading-[0.95] md:text-5xl">
+                สร้างเพื่ออยู่ยาว
+                <br />
+                สร้างด้วยความถูกต้อง
+              </h2>
+              <p className="mt-6 max-w-lg text-sm leading-7 text-muted-foreground">
+                Kropper ได้ก่อตั้งขึ้นอย่างเป็นทางการในฐานะบริษัทเมื่อวันที่ 20 มกราคม 2025
+                เป็นก้าวสำคัญที่ย้ายจากร้านบาร์เบอร์อิสระสู่ธุรกิจที่มีรูปแบบและมาตรฐานที่ชัดเจนยิ่งขึ้น
+              </p>
+              <div className="mt-8 grid max-w-md grid-cols-2 gap-4">
+                <div className="border-t-2 border-primary pt-3">
+                  <p className="text-[0.68rem] font-bold uppercase tracking-[0.15em] text-primary">
+                    ก่อตั้ง
+                  </p>
+                  <p className="mt-2 font-display text-xl">08.10.2024</p>
+                </div>
+                <div className="border-t-2 border-primary pt-3">
+                  <p className="text-[0.68rem] font-bold uppercase tracking-[0.15em] text-primary">
+                    จดทะเบียนบริษัท
+                  </p>
+                  <p className="mt-2 font-display text-xl">20.01.2025</p>
+                </div>
+              </div>
+            </div>
+            <figure className="overflow-hidden border border-border bg-secondary/35 p-3">
+              <img
+                src="/frame.png%20.jpg"
+                alt="Bangkok Kropper registration document"
+                className="max-h-[34rem] w-full object-contain"
+              />
+              <figcaption className="flex items-center justify-between border-t border-border px-2 pt-3 text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">
+                <span>เอกสารจดทะเบียนบริษัท</span>
+                <span className="text-primary">Kropper</span>
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section className="border-b border-border px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              12 / สิ่งที่เราอยากให้คุณจำ
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[0.95] md:text-6xl">
+              จดจำความแตกต่าง
+            </h2>
+            <div className="mx-auto mt-9 max-w-xl space-y-3 text-base leading-8 text-muted-foreground">
+              <p>เราหวังว่าคุณจะจำมากกว่าผลลัพธ์ของการตัดผม</p>
+              <p>
+                จำความสะอาด จำความใส่ใจในรายละเอียด จำความรู้สึกที่ได้รับการดูแล
+                และจำความมั่นใจที่เห็นในกระจกเมื่อคุณมองไปว่า “ฉันเลือกเก้าอี้ที่ถูกต้อง”
+              </p>
+              <p>
+                จำว่า ค่าใช้จ่ายที่คุณจ่ายไม่ได้แค่ซื้อการตัดผม แต่คือประสบการณ์ที่อยู่เบื้องหลังมัน
+              </p>
+            </div>
+            <p className="mx-auto mt-12 max-w-3xl font-display text-3xl leading-tight text-primary md:text-5xl">
+              การมาที่ Kropper ควรทำให้คุณดูดีขึ้น รู้สึกสดชื่นขึ้น และมั่นใจว่าคุณเลือกเก้าอี้ที่ถูกต้อง
+            </p>
+          </div>
+        </section>
+
+        <section className="border-y border-border bg-secondary/35 px-5 py-20 text-center md:py-28">
+          <div className="mx-auto max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary">
+              Final Chair Call
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[0.9] md:text-6xl">
+              พร้อมสำหรับทรงต่อไปแล้วหรือยัง?
+            </h2>
+            <p className="mt-6 text-base text-muted-foreground">
+              ลองสัมผัสมาตรฐานของ Kropper ด้วยตัวเอง
+            </p>
+            <div className="mt-9 flex flex-wrap justify-center gap-3">
+              <a
+                href="/book"
+                className="inline-flex items-center gap-2 bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-primary-foreground hover:bg-accent"
+              >
+                จองคิว <ArrowRight className="size-4" />
+              </a>
+              <a
+                href="/services"
+                className="inline-flex items-center gap-2 border border-border px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-foreground hover:border-primary hover:text-primary"
+              >
+                ดูบริการของเรา <ArrowRight className="size-4" />
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}

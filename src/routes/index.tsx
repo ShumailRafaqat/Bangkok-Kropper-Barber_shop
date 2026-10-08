@@ -1149,7 +1149,7 @@ function Home() {
       <section className="border-y border-border bg-card/40 px-5 py-20">
         <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
           <a
-            href="https://www.instagram.com/popular/bangkok-kropper-barber-shop/"
+            href="https://www.instagram.com/bangkokkropperbarbershop?srtk=eXNldjViNDJpMmN4"
             target="_blank"
             rel="noreferrer"
             className="group relative block overflow-hidden rounded-sm border border-[#d4a24a]/80 bg-background p-7 md:p-10"

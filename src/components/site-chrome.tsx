@@ -289,7 +289,7 @@ export const MAPS_EMBED_TWO =
 const socials = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/popular/bangkok-kropper-barber-shop/",
+    href: "https://www.instagram.com/bangkokkropperbarbershop?srtk=eXNldjViNDJpMmN4",
     Icon: Instagram,
   },
   {

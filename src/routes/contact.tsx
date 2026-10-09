@@ -27,7 +27,7 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
 });
 
-const slots = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM", "12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM"];
+const slots = ["8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM", "12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM"];
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function ContactPage() {
@@ -174,7 +174,7 @@ function ContactPage() {
                 <span className="block text-xs uppercase tracking-[0.2em] text-muted-foreground">
                   {language === "th" ? "เวลาเปิดทำการ" : "Hours"}
                 </span>
-                <span className="text-foreground">Daily 9:00am – 5:00am</span>
+                <span className="text-foreground">Daily 8:00am – 4:00am</span>
               </span>
             </div>
             <div className="flex items-center gap-4 rounded-sm border border-primary/40 bg-card/70 p-5 neon-ring">

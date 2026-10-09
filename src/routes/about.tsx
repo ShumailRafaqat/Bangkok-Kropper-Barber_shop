@@ -1,4 +1,4 @@
-﻿import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
   Check,
@@ -462,7 +462,7 @@ function AboutPage() {
                     </div>
                     <div className="mt-6 flex flex-wrap justify-between gap-3 border-t border-border pt-4">
                       <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">
-                        <Clock3 className="size-4 text-primary" /> 9:00am to 5:00am
+                        <Clock3 className="size-4 text-primary" /> 8:00am to 4:00am
                       </span>
                       <a
                         href={branch.maps}
@@ -993,7 +993,7 @@ function ThaiAboutPage() {
                     </div>
                     <div className="mt-6 flex flex-wrap justify-between gap-3 border-t border-border pt-4">
                       <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">
-                        <Clock3 className="size-4 text-primary" /> 09:00 – 05:00
+                        <Clock3 className="size-4 text-primary" /> 08:00 – 04:00
                       </span>
                       <a
                         href={branch.maps}

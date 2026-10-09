@@ -289,7 +289,7 @@ export const MAPS_EMBED_TWO =
 const socials = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/bangkokkropperbarbershop?srtk=eXNldjViNDJpMmN4",
+    href: "https://www.instagram.com/popular/bangkok-kropper-barber-shop/",
     Icon: Instagram,
   },
   {
@@ -307,13 +307,13 @@ const socials = [
 ] as const;
 
 const hours = [
-  { day: "Monday", open: "9:00am", close: "5:00am" },
-  { day: "Tuesday", open: "9:00am", close: "5:00am" },
-  { day: "Wednesday", open: "9:00am", close: "5:00am" },
-  { day: "Thursday", open: "9:00am", close: "5:00am" },
-  { day: "Friday", open: "9:00am", close: "5:00am" },
-  { day: "Saturday", open: "9:00am", close: "5:00am" },
-  { day: "Sunday", open: "9:00am", close: "5:00am" },
+  { day: "Monday", open: "8:00am", close: "4:00am" },
+  { day: "Tuesday", open: "8:00am", close: "4:00am" },
+  { day: "Wednesday", open: "8:00am", close: "4:00am" },
+  { day: "Thursday", open: "8:00am", close: "4:00am" },
+  { day: "Friday", open: "8:00am", close: "4:00am" },
+  { day: "Saturday", open: "8:00am", close: "4:00am" },
+  { day: "Sunday", open: "8:00am", close: "4:00am" },
 ] as const;
 
 const openingMinutes = 9 * 60;
